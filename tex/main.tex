@@ -1,0 +1,118 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[english]{babel}
+\usepackage{newlfont}
+\usepackage{color}
+\textwidth=450pt\oddsidemargin=0pt
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\usepackage[Lenny]{fncychap}
+
+\begin{document}
+\begin{titlepage}
+%
+%
+% ONCE YOU ARE FINISHED WITH YOUR CHANGES MODIFY "RED" WITH "BLACK" IN ALL \textcolor COMMENTS
+%
+%
+\begin{center}
+{{\Large{\textsc{Alma Mater Studiorum $\cdot$ University of  Bologna}}}} 
+\rule[0.1cm]{15.8cm}{0.1mm}
+\rule[0.5cm]{15.8cm}{0.6mm}
+\\\vspace{3mm}
+{\small{\bf School of Science \\
+Department of Physics and Astronomy\\
+Master Degree in Physics}}
+\end{center}
+
+\vspace{23mm}
+
+\begin{center}\textcolor{black}{
+%
+% INSERT THE TITLE OF YOUR THESIS
+%
+{\Large{\bf Implementation of an automated pipeline for predicting the response to neo-adjuvant chemo-rediotherapy of colorectal cancer}}
+}\end{center}
+
+\vspace{50mm} \par \noindent
+
+\begin{minipage}[t]{0.47\textwidth}
+%
+% INSERT THE NAME OF THE SUPERVISOR WITH ITS TITLE (DR. OR PROF.)
+%
+{\large{\bf Supervisor: \vspace{2mm}\\\textcolor{black}{
+Prof. Gastone Castellani}\\\\
+%
+% INSERT THE NAME OF THE CO-SUPERVISOR WITH ITS TITLE (DR. OR PROF.)
+%
+% IF THERE ARE NO CO-SUPERVISORS REMOVE THE FOLLOWING 5 LINES
+%
+\textcolor{black}{
+\bf Co-supervisor: \vspace{2mm}\\Dr. Nico Curti\\\\}}}
+\end{minipage}
+%
+\hfill
+%
+\begin{minipage}[t]{0.47\textwidth}\raggedleft \textcolor{black}{
+{\large{\bf Submitted by:
+\vspace{2mm}\\
+%
+% INSERT THE NAME OF THE GRADUAND
+%
+\textcolor{black}{
+Giuseppe Filitto}}}
+}
+\end{minipage}
+
+\vspace{32mm}
+
+\begin{center}
+%
+% INSERT THE ACADEMIC YEAR
+%
+Academic Year \textcolor{black}{ 2020/2021}
+\end{center}
+
+\end{titlepage}
+
+
+\clearpage
+
+\begin{abstract}
+    Colorectal cancer is a malignant neoplasm of the large intestine resulting from the uncontrolled proliferation of one of the cells making up the colorectal tract.
+    In Western countries, colorectal cancer is the second largest malignant tumor after that of the breast in women and the third after that of the lung and prostate in men. Risk factors for this kind of cancer include colon polyps, long-standing ulcerative colitis, diabetes II and genetic history (HNPCC or Lynch syndrome). In order to get information about diagnosis, therapeutic effect evaluation on colorectal cancer, radiomic analysis can be performed on radiological images through the application of dedicated radiomic algorithms based on segmentation and features extraction. By segmentation we mean the determination of the regions of interest (ROI) in images that are going to be analyzed. In clinical routines, it is carried with manual or semi-manual techniques by radiologists, but this process is time-consuming, highly operator-dependent and subject to operator expertise. By Radiomic features we meant the features coming from radiographic medical images, which can potentially uncover disease characteristics that fail to be appreciated by the naked eye.
+    The aim of this project is to implement an automatic pipeline based on automatic segmentation of T2 weighted Magnetic Resonance (MR) images exploiting Convolutional Neural Networks in order to predict the response to neo-adjuvant chemo-radiotherapy in colorectal cancer using radiomics features.
+\end{abstract}
+
+\clearpage
+\thispagestyle{empty}
+\begin{flushright}
+\null\vspace{\stretch{1}}
+\large{\emph{\dots To my family and Nicole}}
+\vspace{\stretch{2}}\null
+\end{flushright}
+
+
+\clearpage
+\tableofcontents
+
+\chapter{Introduction}
+
+
+
+\chapter{Segmentation}
+
+\chapter{Radiomics}
+
+\chapter{Pipeline}
+
+\chapter{Results}
+
+\chapter{Conclusions}
+
+
+
+
+
+\end{document}
