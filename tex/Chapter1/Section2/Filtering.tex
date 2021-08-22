@@ -1,0 +1,20 @@
+\documentclass{standalone}
+\begin{document}
+\section{Spatial Domain Filtering}
+
+Filtering is a technique for modifying or enhancing an image.
+The term \textit{spatial domain} refers to the plane of the image itself, where the related processing methods are based on the direct manipulation of the pixels.
+Among the various categories of spatial processing there are \textit{intensity transformations} and \textit{spatial filtering}.
+The former operate on single pixels while the latter on every pixel's neighborhood.\\
+Mathematically, we can express this processes as follow:
+
+\begin{equation}
+    g(x,y) = T[f(x,y)] 
+\end{equation}
+
+where $f(x, y)$ is the input image, $g(x, y)$ the output image and $T$ is an operator defined on $f$ around a point $(x, y)$.
+The operation on the point located in $(x, y)$ usually involves the application of a matrix called \textit{mask} or \textit{kernel}.
+It must have  $M \times N$ dimensions with M and N odd, in order to make the center of the mask coincide with the pixel in question, and occupy a small section of the image.
+The application of the above-mentioned mask (or kernel) on an image is called \textit{spatial filtering}.  
+
+\end{document}

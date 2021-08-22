@@ -1,0 +1,71 @@
+\documentclass{standalone}
+\begin{document}
+\subsection{Smoothing Filters}
+Smoothing filters are used for blurring and for noise reduction\cite{corrandconv}.
+This is used in removal of small details and bridging of small gaps in lines or curves.
+Smoothing spatial filters include \textit{linear filters} and \textit{nonlinear filters}\cite{corrandconv}.\\
+The general implementation for filtering an $M \times N$ image with a weighted averaging filter of size $m \times n$ is given by:
+\begin{equation}
+    g(x, y) = \frac{\sum_{s = -a}^{a} \sum_{t = -b}^{b} w(s, t) f(x + s, y + t)}{\sum_{s = -a}^{a} \sum_{t = -b}^{b} w(s, t)}
+\end{equation}
+where $m=2a+1$ and $n=2b+1$.
+
+\paragraph{Linear filtering} is based on the \textit{mean filter} \cite{filters}.
+The mean filter is a simple sliding spatial filter that replaces the center value in the mask region with the average of all the neighboring pixel values including itself. 
+These filters are also called \textit{low pass filters} since the process of averaging drastically lowers high frequencies.
+The mask or kernel is a square.
+Larger kernels of size $5\times5$ or $7\times7$ produces more denoising but make the image more blurred\cite{filters}. 
+A common mean filter can be described by a $3\times3$ matrix with all elements equal to 1, so that the output pixel corresponds to a value of:
+
+\begin{equation}
+    R = \frac{1}{9} \begin{pmatrix}
+        1 & 1 & 1\\
+        1 & 1 & 1\\
+        1 & 1 & 1
+        \end{pmatrix} \mathbf{z} = \frac{1}{9} \sum_{i = 1}^{9}z_i
+\end{equation}
+
+ or using a weighted mean filter:
+
+\begin{equation}
+     R' = \frac{1}{16}\begin{pmatrix}
+        1 & 2 & 1\\
+        2 & 4 & 2\\
+        1 & 2 & 1
+        \end{pmatrix} \mathbf{z}
+\end{equation}
+
+
+
+\paragraph{Non-Linear filtering} is based on the \textit{median filter}\cite{filters}.
+The median filter principle is similar to the mean filter. 
+A $3\times3$, $5\times5$, $7\times7$ kernel or mask is scanned over pixel matrix of the entire image.
+The median of the pixel values in the mask region is calculated, and the center pixel of the mask region is replaced with the calculated median value\cite{filters}.
+Mathematically:
+
+\begin{equation}
+    g(p) = median\{f(p), where \: p \in N_8(p)\}
+\end{equation}
+where $g(p)$ is the median pixel value, $f(p)$ all pixel values under mask, and $N_8(p)$ 8-neighborhood of pixel $p$.\\
+This filter is particularly effective in the presence of \textit{impulse noise} (or \textit{salt-and-pepper noise})\cite{corrandconv}.
+
+\paragraph{\textcolor{blue}{Notes:} Adaptive filters} 
+are commonly used in image processing to enhance or restore data by removing noise without significantly blurring the structures in the image\cite{Adaptive}.
+This means to not smoothing the areas of the image in which there is a large jump in intensity values (i.e. when there is an \textit{edge}) and at the same time applying the filter to lower the noise.
+In this case, the local variance will be evaluated in relation to the variance of the noise that occurs.\\
+Mathematically:
+\begin{equation}
+    \hat{f}(x, y) = f(x, y) - \frac{\sigma_{noise}^2}{\sigma_{local}^2}[f(x, y) - m_{local}]
+\end{equation}
+
+where if  $\sigma_{noise}^2 = \sigma_{local}^2$ the mean local value is associated to the output, while if $\sigma_{noise}^2 \ll \sigma_{local}^2$ the function is not altered.
+\\
+The same concept can be used for the median filter, defining the Adaptive Median Filter
+algorithm:
+it is first defined a portion of the image $S_{xy}$ of variable size until a pre-defined size $S_{xy MAX}$;
+then it is calculated from this area the maximum intensity value ($z_{max}$), the minimum value ($z_{min}$) and the median value ($z_{median}$).
+In the first step of the algorithm, the aim is to see if the median value coincides with the intensity extremes present in the area, that is, if inside the mask there is actually an area with discontinuities due to noise.
+In the second step of the algorithm, the aim is to check if the point in the center of the area, $z_{xy}$, is to be modified with the median value or to be left unchanged. 
+If the maximum window size is reached, then simply the median value is returned.
+
+\end{document}
