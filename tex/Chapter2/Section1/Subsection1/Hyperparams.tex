@@ -1,0 +1,25 @@
+\documentclass{standalone}
+\begin{document}
+\subsection{Hyperparameters}
+
+Hyperparameters consist in settings that are used to control the learning process of the network.
+
+\paragraph{Kernel size}
+is the dimension of the kernel matrix. Usually $3\times3$ or $2\times2$.
+
+\paragraph{Padding}
+consists in the addition of  0-valued pixels on the borders of an image.
+This is done so that the border pixels are not lost from the output.
+
+\paragraph{Stride}
+consists in the number of pixels that the analysis window moves on each iteration. 
+A stride of 2 means that each kernel is offset by 2 pixels from its predecessor.
+
+\paragraph{Pooling size}
+consists in the dimension of the pooling sub-region. Usually set $2\times2$.
+Larger size can drastically reduce the dimension of the signal producing information loss.
+
+\paragraph{Dilation}
+consists in ignoring pixels within a kernel.
+For example a dilation of 2 on a $3\times3$ kernel expands it to $7\times7$, while still processing 9 pixels.
+\end{document}

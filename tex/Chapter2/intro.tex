@@ -1,0 +1,27 @@
+\documentclass{standalone}
+\begin{document}
+\chapter{Artificial Neural Networks}
+Artificial Neural Networks (ANNs) are computational architectures derived from neural physiological models\cite{segmentationreview}.
+An Artificial Neural Network is based on a collection of connected units or nodes called \textit{artificial neurons}. 
+Each connection can transmit a signal to other neurons, processes and transmit it to other neurons. 
+The output of each neuron is computed by some non-linear function of the sum of its inputs. 
+The connections are called \textit{edges}. 
+Neurons and edges typically have a \textit{weight}. 
+The weight increases or decreases the strength of the signal at a connection. 
+Typically, neurons are aggregated into \textit{layers}. 
+Different layers may perform different transformations on their inputs. 
+Signals travel from the \textit{input layer} (first layer), to the \textit{output layer} (last layer).
+ANNs learn (or are trained) by processing examples, each of which contains a known \textit{input} and \textit{result}.
+The difference between the former and the latter is called \textit{error}.
+The network adjusts its weighted according to a learning rule and using this error valu.
+Practically this can be done by defining a \textit{loss function} that is evaluated periodically during the learning process.
+After a sufficient number of these adjustments the training can be terminated based upon certain criteria. 
+This is process is also known as \textit{supervised learning}\cite{wiki:ann}.\\
+Artificial Neural Networks (ANNs) have evolved into a broad family of techniques\cite{segmentationreview}.
+For visual analysis are usually used Convolutional Neural Networks (CNNs) based on \textit{convolution kernels} or \textit{filters} that that extract feature maps\cite{wiki:cnn}.
+Several architectures have been developed over the years.
+In bio-medical image processing, the so-called U-Net\cite{unet}, is one of the most common architecture.\\
+Since the main architecture of this project belongs to the CNNs class, the following section will be aimed to the description of Convolutional Neural Networks.
+Then, the description of the main architecture.
+
+\end{document}
