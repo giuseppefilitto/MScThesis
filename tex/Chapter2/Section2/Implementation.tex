@@ -1,0 +1,21 @@
+\documentclass{standalone}
+\begin{document}
+\section{Implementation}
+
+I have implemented the pipeline described before using python, which is an high level object oriented programming language. 
+The supported python versions are: $3.6| 3.7| 3.8| 3.9$.
+To perform operations on images (image filtering, input-output operations, etc\dots), I've used different libraries depending on the specific purpose, as as anticipated in the description section.
+\\
+The whole code is open-source and available on GitHub \cite{img-segm} and the relative documentation, made using Sphinx, is available at : \url{https://img-segm.readthedocs.io/en/latest/?badge=latest}.
+The installation is managed by setup.py, which also provides the full list of dependencies.
+The pipeline installation is tested on MacOS (base environment) and on Linux by using the TravisCI host.
+\\
+The pipeline implementation provides also modules that allow one to load, visualize, processing the DICOM series and to train a U-Net model and scripts that provide a fast way to handle DICOM series and ROI from command line. 
+\\
+The detailed description of each module and script is available on GitHub.
+Once you have installed it, you can start to segment the images directly from your bash, passing as input the path of the directory containing the DICOM series, to obtain the prediction of response.
+\\
+There are different output options that will be described in the results chapter.\\
+This section will be aimed to show the implementation of the main steps of the described pipeline.
+
+\end{document}

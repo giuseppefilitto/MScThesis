@@ -1,0 +1,105 @@
+\documentclass{standalone}
+\begin{document}
+\subsection{Features Extraction and Analysis}
+
+For this purpose, I used the \textsc{Pyradiomics} library\cite{Pyradiomics} to extract features from each single slice of the patient after storing for each patient input and segmented images as 3D images (.nrrd format) in a dedicated directory, using \textsc{SimpleITK} library \cite{SimpleITK}, required by \textsc{Pyradiomics}. 
+From each patient a total of 100 radiomic features were extracted.
+The extraction settings were stored in a $\mathtt{Params.yaml}$ file required by \textsc{Pyradiomics}.
+\begin{lstlisting}[language = python, caption=Features extraction implementation]
+from radiomics import featureextractor
+import pandas as pd
+import numpy as np
+import SimpleITK as sitk
+
+params  = '../extras/Params.yaml'
+extractor = featureextractor.RadiomicsFeatureExtractor(params)
+
+features = {}
+
+for patient in good_patients:
+
+    dirs = glob.glob(src + '/' + patient + '/*_NRRD')
+    
+    
+    for directory in dirs:
+
+        original = sitk.ReadImage(directory + "/original.nrrd")
+        segmented = sitk.ReadImage(directory + "/segmented.nrrd")
+
+        folder_name = os.path.split(directory)[1]
+        fold_prefix = folder_name.split('_')[0]
+
+        features[patient, fold_prefix] = extractor.execute(original, segmented)
+
+    
+\end{lstlisting}
+
+Features are stored in a dictionary, which the key is the caseID of patient and the the name of the examination directory containing the dicom series.
+I started to visualize and sort the features for each patient and stored them into a pandas Dataframe $\mathtt{df}$ made by 100 columns (one for each extracted feature) and the number of rows made by the number of patients.
+
+\begin{lstlisting}[language = python, caption=Features dataframe implementation]
+
+dict_list = list(features)
+feature_names = list(sorted(filter ( lambda k: k.startswith("original_"), features[dict_list[0]] )))
+
+print('NUMEBR OF CASE_ID: ', len(dict_list))
+print('NUMEBR OF FEATURES: ', len(feature_names))
+print(dict_list)
+
+sorted_list = sorted(dict_list, key=lambda x: int(x[0].replace('BO', '')))
+
+
+sorted_ID = list(map(lambda x: x[0], sorted_list))
+
+samples = np.zeros((len(sorted_list), len(feature_names)))
+
+for k, case_id in enumerate(sorted_list):
+    a = np.array([])
+    for feature_name in feature_names:
+        a = np.append(a, features[case_id][feature_name])
+    samples[k, ...] = a
+
+#for possible NaNs
+samples = np.nan_to_num(samples)
+
+samples.shape
+
+df = pd.DataFrame(data=samples, columns=feature_names, index=sorted_ID)
+
+        
+\end{lstlisting}
+
+Then, I uploaded the database containing clinical data to access the Tumor Regression Grade (TRG) values.
+Unfortunately, not for every patient data were available, so the patients rows without TRG values were dropped, thus excluded from the analysis.
+To overcome the lack of data, TRG values were binarized.
+In order to reduce features, PCA was performed setting $\mathtt{n\_components = .9}$ (meaning the number of components that gives the $90 \%$ of the toal variance) by using \textsc{Scikit-learn} library\cite{scikit}, exploiting $\mathtt{make\_pipeline}$ to standardize data before the PCA.
+Then, thanks to the attribute $\mathtt{components\_}$ , that outputs an array of shape $[ \mathtt{n \_ components} , \:  \mathtt{n \_ features} ]$, it is possible to get how components are related to the original features since each coefficient represents the correlation between a particular component and feature.
+
+\begin{lstlisting}[language = python, caption=PCA implementation]
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.pipeline import make_pipeline
+
+clinical_df = pd.read_excel('../data/clinical_db.xlsx', sheet_name='data', index_col='PatientID')
+
+TRG = clinical_df['TRG']
+
+df = pd.concat([df, TRG], axis=1)
+df = df[df['TRG'].notna()]
+
+
+X = df.drop('TRG', axis=1)
+y = df['TRG'].values
+y = np.where(y <=1, 0, 1)
+
+pca = make_pipeline(StandardScaler(), PCA(n_components=.9, svd_solver='full'))
+pca.fit(X, y)
+
+
+print(pd.DataFrame(pca.components_,columns=X.columns, index = ['PC-0','PC-1', 'PC-2', 'PC-3', 'PC-4', 'PC-5']))
+\end{lstlisting}
+
+
+
+
+\end{document}

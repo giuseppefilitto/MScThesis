@@ -1,0 +1,106 @@
+\documentclass{standalone}
+\begin{document}
+\subsection{Pre-processing}
+
+As we said in the Description section, the pre-processing consists of the application of a smoothing filter and a gamma correction.
+Before the processing operations, for each patient, the images needed to be read from the DICOM files as an array of pixels in order to apply the pre-processing functions.
+This was done by the function $\mathtt{get\_slices}$: 
+
+\begin{lstlisting}[language = python, caption=$\mathtt{get\_slices}$ implementation]
+import numpy as np 
+import pyradiomics
+
+def read_slices(filename):
+
+    _, ext = filename.split(".")
+
+    if ext != "dcm":
+        raise ValueError("Input filename must be a DICOM file")
+
+    pix_arr = pydicom.dcmread(filename).pixel_array
+
+    return pix_arr
+
+def get_slices(dir_path)
+
+    files = glob.glob(dir_path + "/*.dcm")
+
+    # ordering as istance number
+    z = [float(pydicom.read_file(f, force=True).get(
+        "InstanceNumber", "0") - 1) for f in files]
+    order = np.argsort(z)
+    files = np.asarray(files)[order]
+
+    slices = [read_slices(f) for f in files]
+    slices = np.asarray(slices)
+
+    return slices
+
+\end{lstlisting}
+
+For this purpose, I used the \textsc{Numpy} \cite{Numpy} and \textsc{Pydicom} \cite{Pydicom} libraries.
+In particular, \textsc{Pydicom} provided functions to read DICOM files as pixel arrays and to access the \textit{InstanceNumber} (the current slice number stored in the header), while \textsc{Numpy} provided functions to sort the slices \textit{InstanceNumber} and get the images as an array of shape: (depth, height, width) where depth is the number of slices and (height, width) the image size.
+\\
+Once the images have been obtained, I could perform the steps described in the Description section:
+\begin{itemize}
+    \item normalization and rescaling
+    \item denoising
+    \item gamma correction
+\end{itemize}
+
+For this purpose, I used the \textsc{OpenCV} \cite{opencv_library} and \textsc{Scikit-Image} \cite{scikit-image} libraries:
+
+\begin{lstlisting}[language = python, caption=pre-processing function implementation]
+import cv2
+from skimage.restoration import denoise_nl_means, estimate_sigma
+
+def rescale(img):
+    rescaled = cv2.normalize(img, dst=None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+    return rescaled
+
+
+def denoise(img, alpha=10):
+
+    patch_kw = dict(patch_size=5, patch_distance=6,)
+    sigma_est = np.mean(estimate_sigma(img))
+    denoised = denoise_nl_means(img, h=alpha * sigma_est, sigma=sigma_est, fast_mode=True, **patch_kw)
+    return denoised
+
+
+def gamma_correction(img, gamma=1.0):
+    igamma = 1.0 / gamma
+    imin, imax = img.min(), img.max()
+
+    img_c = img.copy()
+    img_c = ((img_c - imin) / (imax - imin)) ** igamma
+    img_c = img_c * (imax - imin) + imin
+    return img_c
+
+
+
+def pre_processing_data(slices, alpha=10):
+
+    imgs = []
+    for layer in range(slices.shape[0]):
+        img = slices[layer, :, :]
+        if slices.shape[1:3] != 512:
+            resized = cv2.resize(img, (512, 512))
+        else:
+            resized = img
+        rescaled = rescale(resized)
+        denoised = denoise(rescaled, alpha)
+        gamma = gamma_correction(denoised)
+        imgs.append(gamma)
+
+    images = [np.expand_dims(im, axis=-1) for im in imgs]
+    images = np.array(images)
+
+    return images
+
+\end{lstlisting}
+
+In particular, the $\mathtt{rescale}$ function is used for the normalization and the rescaling of the images to binary floating-point 32-bit; the $\mathtt{denoise}$ function is used for the denoising process exploiting the \textsc{Scikit-Image} library; the $\mathtt{gamma\_correction}$ function is used for the gamma correction, thus increase/decrease the brightness of the image, depending on gamma.
+All these three functions have been put together into $\mathtt{pre\_processing\_data}$ with a silent check on the image size, to get a single-shot pre-processing function.
+The final output is an array, like $\mathtt{slices}$, containing the relative pre-processed images.
+
+\end{document}

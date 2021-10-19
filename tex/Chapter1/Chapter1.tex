@@ -1,43 +1,44 @@
 \documentclass{standalone}
 \begin{document}
 
-    % MEDICAL DIGITAL IMAGES
+    % MATERIALS AND METHODS
     \input{./Chapter1/intro.tex}
 
-    % GENERAL PROPERTIES 
-    \input{./Chapter1/Section1/Properties.tex}
+    % MEDICAL DIGITAL IMAGES
+    \input{./Chapter1/Section1/medicalimages.tex}
+
+        % GENERAL PROPERTIES 
+        \input{./Chapter1/Section1/Subsection1/Properties.tex}
 
         % MEDICAL IMAGE FORMATS
         \input{./Chapter1/Section1/Subsection1/Formats.tex}
 
-    \newpage
-    % SPATIAL DOMAIN FILTERING
-    \input{./Chapter1/Section2/Filtering.tex}
-
-        % SPATIAL FILTER
-        \input{./Chapter1/Section2/Subsection2/SpatialFilter.tex}
-
-        % CORRELATION AND CONVOLUTION
-        \input{./Chapter1/Section2/Subsection2/Convolution.tex}
+        % SPATIAL DOMAIN FILTERING
+        \input{./Chapter1/Section2/Filtering.tex}
 
         % SMOOTHING FILTERS
         \input{./Chapter1/Section2/Subsection2/Smoothing.tex}
 
-
-    \newpage
     % SEGMENTATION
     \input{./Chapter1/Section3/Segmentation.tex}
+
         % METHODS
         \input{./Chapter1/Section3/Subsection3/Methods.tex}
-
-    \newpage
+        
+        % UNET
+        \input{./Chapter1/Section3/Subsection3/Unet.tex}
+    
     % RADIOMICS
     \input{./Chapter1/Section4/Radiomics.tex}
 
-        % RADIOMIC FEATURES
-        \input{./Chapter1/Section4/Subsection4/RadiomicFeatures.tex}
-
         % POSSIBLE PURPOSES OF RADIOMICS
         \input{./Chapter1/Section4/Subsection4/Purposes.tex}
+    \newpage
+    % PCA
+    \input{./Chapter1/Section5/PCA.tex}
+
+    % SVM
+    \input{./Chapter1/Section6/SVC.tex}
+
 
 \end{document}

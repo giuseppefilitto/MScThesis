@@ -1,0 +1,44 @@
+\documentclass{standalone}
+\begin{document}
+\subsection{Features Analysis}
+
+This step came immediately after the features extraction.
+Firstly, the features have been read, looking for some correlation between features since the goal is to reduce as much as possible the number of irrelevant features.
+As you can see from Figure\ref{heatmap}, showing the features correlation heatmap, there is the presence of highly correlated (and anti-correlated) features, highlighted by the red (and blue) color.
+The names of the features are set by \textsc{Pyradiomics}. In particular, the name before the underscore ($\_$) highlights the feature class. For example $\mathtt{glcm}$ stands for \textit{Gray Level Co-occurrence Matrix (GLCM)} or $\mathtt{firstorder}$ means that the feature belongs to that class.
+\\
+In order to reduce the number of features, Principal Component Analysis (PCA) was performed on the data frame containing the extracted 100 features for each patient.
+The number of resulting features is 6, corresponding to the $90 \% $ of the total variance.
+Since Principal Components (PCs) are linear combinations of the original variables, it is not possible to recover the original features name. 
+However, thanks to the attribute $\mathtt{components\_}$ of the \textsc{Scikit-learn} library\cite{scikit}, that outputs an array of shape $[ \mathtt{n \_ components} , \:  \mathtt{n \_ features} ]$, it is possible to get how components are related to the original features and each coefficient represents the correlation between a particular component and feature.
+In figure \ref{importance}, you can see for each principal component (on the right), which is the original feature (on the left)  having the maximum correlation coefficient with. 
+In particular: 
+\begin{itemize}
+    \item For PC-0: glcm\_jointEntropy
+    \item For PC-1: gldm\_DependenceNonUniformity
+    \item For PC-2: gldm\_LargeDependenceLowGrayLevelEmphasis
+    \item For PC-3: firstorder\_Kurtosis
+    \item For PC-4: glcm\_ldn
+    \item For PC-5: shape\_Flatness
+\end{itemize}
+
+\begin{figure}[htp]
+
+    \centering
+    \includegraphics[width=0.99\textwidth]{../images/heatmap.png}
+
+    \caption{Features correlation heatmap. The red color indicates a correlation, the white color indicates no correlation and the blue color indicates anti-correlation between features. \textit{Notes:} not every feature name has been plotted since 100 features caused the font size to be too small.}
+    \label{heatmap}
+    
+    \end{figure}
+
+    \begin{figure}[ht]
+
+    
+        \includegraphics[width=0.99\textwidth]{../images/importance.png}
+    
+        \caption{For each principal component (on the right), you can see which is the original feature (on the left)  having the maximum correlation coefficient with.}
+        \label{importance}
+        
+        \end{figure}
+\end{document}

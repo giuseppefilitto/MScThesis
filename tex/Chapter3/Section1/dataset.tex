@@ -1,0 +1,31 @@
+\documentclass{standalone}
+\begin{document}
+\section{Dataset Description}
+The main dataset used for this project was provided by IRCCS Sant’Orsola-Malpighi Polyclinic.
+It consists of MRI from 48 patients affected by colorectal cancer undergoing neo-adjuvant radio-chemotherapy, from January 2018 to the end of December 2019.
+The scans are provided slice by slice in DICOM format.
+The scans are T2-weighted images resulting in images that highlight fat (low signal) and water (high signal) within the body.
+Within the scans, also manual annotations, made by expert clinicians, were provided.
+The medical annotations consist of sets of $(x, y)$ points that border the tumor area on the relative image.
+Clinical data were also provided through a dedicated database.
+Among the information stored, the clinical database contains the Tumor Regression Grade (TRG) which indicates the degree of response to neoadjuvant therapy.
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{lc}
+		\toprule
+		\textbf{Property} & \textbf{Value}   \\
+	    \midrule
+		Number of patients &  48 \\
+	    \midrule
+		Distribution by sex (M/F) &  29/19 \\
+		\midrule
+		Distribution by age (min/median/max) &   48/70/89  \\
+		\bottomrule
+	\end{tabular}
+	\caption{Dataset properties.}
+	\label{tab:properties}
+\end{table}
+
+
+\end{document}

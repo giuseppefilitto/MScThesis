@@ -14,7 +14,7 @@ where $m=2a+1$ and $n=2b+1$.
 The mean filter is a simple sliding spatial filter that replaces the center value in the mask region with the average of all the neighboring pixel values including itself. 
 These filters are also called \textit{low pass filters} since the process of averaging drastically lowers high frequencies.
 The mask or kernel is a square.
-Larger kernels of size $5\times5$ or $7\times7$ produces more denoising but make the image more blurred\cite{filters}. 
+Larger kernels ($5\times5$ or $7\times7$) produce more denoising that smaller ones ($3 \times 3$) but make the image more blurred\cite{filters}. 
 A common mean filter can be described by a $3\times3$ matrix with all elements equal to 1, so that the output pixel corresponds to a value of:
 
 \begin{equation}
@@ -37,35 +37,29 @@ A common mean filter can be described by a $3\times3$ matrix with all elements e
 
 
 
+
+
+
 \paragraph{Non-Linear filtering} is based on the \textit{median filter}\cite{filters}.
 The median filter principle is similar to the mean filter. 
-A $3\times3$, $5\times5$, $7\times7$ kernel or mask is scanned over pixel matrix of the entire image.
+The mask or kernel is scanned over the pixels of the entire image.
 The median of the pixel values in the mask region is calculated, and the center pixel of the mask region is replaced with the calculated median value\cite{filters}.
+This filter is particularly effective in the presence of \textit{impulse noise} (or \textit{salt-and-pepper noise})\cite{corrandconv}.\\
 Mathematically:
 
 \begin{equation}
     g(p) = median\{f(p), where \: p \in N_8(p)\}
 \end{equation}
-where $g(p)$ is the median pixel value, $f(p)$ all pixel values under mask, and $N_8(p)$ 8-neighborhood of pixel $p$.\\
-This filter is particularly effective in the presence of \textit{impulse noise} (or \textit{salt-and-pepper noise})\cite{corrandconv}.
+where $g(p)$ is the median pixel value, $f(p)$ all pixel values under mask, and $N_8(p)$ 8-neighborhood of pixel $p$.
+
 
 \paragraph{\textcolor{blue}{Notes:} Adaptive filters} 
 are commonly used in image processing to enhance or restore data by removing noise without significantly blurring the structures in the image\cite{Adaptive}.
-This means to not smoothing the areas of the image in which there is a large jump in intensity values (i.e. when there is an \textit{edge}) and at the same time applying the filter to lower the noise.
-In this case, the local variance will be evaluated in relation to the variance of the noise that occurs.\\
+This means not smoothing the areas of the image in which there is a large jump in intensity values (i.e. when there is an \textit{edge}) and at the same time applying the filter to lower the noise.
+In this case, the local variance will be evaluated concerning the variance of the noise that occurs.\\
 Mathematically:
 \begin{equation}
     \hat{f}(x, y) = f(x, y) - \frac{\sigma_{noise}^2}{\sigma_{local}^2}[f(x, y) - m_{local}]
 \end{equation}
-
-where if  $\sigma_{noise}^2 = \sigma_{local}^2$ the mean local value is associated to the output, while if $\sigma_{noise}^2 \ll \sigma_{local}^2$ the function is not altered.
-\\
-The same concept can be used for the median filter, defining the Adaptive Median Filter
-algorithm:
-it is first defined a portion of the image $S_{xy}$ of variable size until a pre-defined size $S_{xy MAX}$;
-then it is calculated from this area the maximum intensity value ($z_{max}$), the minimum value ($z_{min}$) and the median value ($z_{median}$).
-In the first step of the algorithm, the aim is to see if the median value coincides with the intensity extremes present in the area, that is, if inside the mask there is actually an area with discontinuities due to noise.
-In the second step of the algorithm, the aim is to check if the point in the center of the area, $z_{xy}$, is to be modified with the median value or to be left unchanged. 
-If the maximum window size is reached, then simply the median value is returned.
 
 \end{document}

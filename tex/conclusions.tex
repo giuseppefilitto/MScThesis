@@ -1,7 +1,46 @@
 \documentclass{standalone}
 \begin{document}
+\markboth{}{CONCLUSIONS}
 \chapter*{Conclusions}\addcontentsline{toc}{chapter}{Conclusions}
 
+In this work of thesis, I have developed and implemented an automated pipeline to predict the response to neoadjuvant chemo-radiotherapy of patients affected by colorectal cancer.\\
+The starting point was the MRI scans.
+Firstly, I started with the exploration of data coming from the IRCCS Sant'Orsola-Malpighi Policlinic dataset.
+It consists of MRI scans from 48 patients affected by colorectal cancer undergoing neo-adjuvant radio-chemotherapy.
+Within the scans, also manual annotations made by expert clinicians were provided.
+Data were pre-processed applying filters on the images, to denoise and enhance the brightness.
+This preliminary step was done to help the supervised training of a Convolutional Neural Network to perform automatic segmentation.
+However, from the dataset, only 37 patients were selected because for some of them there was a misregistration between the images and the medical annotations (ground-truth).
+The training was performed over a total of 488 images, split into training and validation set.
+By comparing the segmentation coming from the trained model and the one coming from manual medical annotations, it resulted that the model performs consistently with the medical annotations, even if for some restricted cases it failed to segment correctly the images.
+The metric used to evaluate the segmentation is the Dice Similarity Coefficient (DSC).
+The evaluation on data coming from the validation set, results in a DSC=0.71, which is consistent and among the highest of literature.
+\\
+From the segmented images, for each patient, I extracted 100 radiomic features and stored them into a dataframe containing 37 rows, one for each patient and 100 columns, one for each feature.
+The features were analyzed in order to train a classifier to obtain a prediction of response.
+The prediction is based on the Tumor Regression Grade (TRG) which gives an evaluation of how much the chemo-radiotherapy was effective.
+These data were obtained from the clinical database of the patients provided by the IRCCS Sant'Orsola-Malpighi Policlinic.
+Unfortunately, for some patients TRG data were missing so they were excluded from the analysis. 
+The total number of patients from 37 became 32.
+To overcame the lack of data, TRG values were binarized into Class 0 and Class 1.
+Class 0 represents a complete response to chemo-radiotherapy while Class 1 a moderate one.
+The classifier was made exploiting Principal Components Analysis (PCA) and a Support Vector Classifier.
+PCA was performed to reduce the number of features from 100 to 6, corresponding to the 90\% of the total variance.
+Then the Support Vector Classifier was trained end cross-validated on the data.
+The results show that the classification for Class 0 is good for 10 cases over 13 thus 3 are wrong classified, while for class 1 it is good for 15 cases over 19 thus 4 are wrong classified.
+The performance of the classifier was also tested computing the Receiver Operating Characteristic (ROC) curve, in particular calculating the area under the ROC curve, Area Under Curve (AUC).
+The AUC resulted higher than the 80 \% for both the classes. 
+Even for the average ROC curve, the AUC resulted higher than the 80 \%, thus grater than 50 \% which correspond to a random classifier (no-benefit classifier).
+\\
+The pipeline was implemented and developed by using python language on the GitHub platform as an open-source project with the relative documentation.
+Once you have installed it, you can segment images directly from the bash.
+The pipeline gives different outputs depending on the needing.
+It is possible to obtain the identified tumor area with red contours, the predicted binary mask of the segmented slice, the predicted probability map of each slice and the 3D mesh  of the segmented areas.
+\\
+Further developing of this project are possible, like embedding more information about the clinical status of the patient. Moreover, increasing the number of patients into the analysis can give more general and significant results.
+In the end, this project, despite the lack data, provided an automated pipeline able to segment MRI scans
+of patients affected by colorectal cancer in order and to predict the response to neoadjuvant chemo-radiotherapy
+using radiomics features with satisfactory results.
 
 
 

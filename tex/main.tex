@@ -7,7 +7,7 @@
 \usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage[export]{adjustbox}
-\usepackage{subcaption} 
+\usepackage{subcaption}
 \usepackage{array}
 \usepackage{multirow}
 \usepackage{tabularborder}
@@ -32,6 +32,35 @@
 \usepackage{csquotes} % When using babel or polyglossia with biblatex
 \addbibresource{bibliography.bib}
 
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
 
 \begin{document}
 \input{./titlepage.tex}
@@ -55,12 +84,14 @@
 \include{./Chapter1/Chapter1.tex}
 \include{./Chapter2/Chapter2.tex}
 \include{./Chapter3/Chapter3.tex}
-\include{./Chapter4/Chapter4.tex}
 \include{./conclusions.tex}
+\include{./Acknoledgments.tex}
 
 \clearpage
 
+\addcontentsline{toc}{chapter}{Bibliography}
+\printbibliography 
 
-\printbibliography
+
 
 \end{document}

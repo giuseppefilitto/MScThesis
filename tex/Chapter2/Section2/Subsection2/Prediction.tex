@@ -1,0 +1,53 @@
+\documentclass{standalone}
+\begin{document}
+\subsection{Prediction of Response}
+
+This step was implemented exploiting $\mathtt{make\_pipeline}$ to get the prediction of response after scaling and performing PCA.
+The prediction is given by a Support Vector Classifier $\mathtt{SVC}$, setting the parameter $C = 100$.
+Cross validation was performed exploiting $\mathtt{cross\_val\_predict}$ and $\mathtt{StratifiedKFold}$ of the \textsc{Scikit-learn} library\cite{scikit}.
+In particular, to get the $\mathtt{random\_state}$ of the $\mathtt{StratifiedKfold}$ was set to the median value of the Matthews Correlation coefficient distribution, obtained after 500 simulations.
+Finally the classification report was provided by using the $\mathtt{classification\_report}$ of \textsc{Scikit-learn}.
+
+
+\begin{lstlisting}[language = python, caption=Prediction of response implementation]
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import cross_val_predict, StratifiedKFold
+from sklearn.svm import SVC
+from sklearn.metrics import matthews_corrcoef
+from sklearn.metrics import classification_report
+    
+X = df.drop('TRG', axis=1)
+y = df['TRG'].values
+y = np.where(y <=1, 0, 1)
+
+pipeline = make_pipeline(StandardScaler(), PCA(n_components=.9, svd_solver='full'), SVC(C=100, probability=True, random_state=0))
+
+n_splits = 10
+
+M_coeffs = []
+for i in range(500):
+    skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=i + 1)
+    y_pred = cross_val_predict(pipeline, X, y, cv=skf)
+    MCC = matthews_corrcoef(y, y_pred)
+    #M_coeffs[i] = MCC
+    M_coeffs.append(MCC)
+
+data = M_coeffs
+median = np.argsort(data)[len(data)//2]
+print(median)
+data[median]
+
+skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=median + 1)
+y_pred = cross_val_predict(pipeline, X, y, cv=skf)
+
+target_names = ['class 0', 'class 1']
+print(classification_report(y, y_pred, target_names=target_names))
+
+
+
+\end{lstlisting}
+    
+
+\end{document}

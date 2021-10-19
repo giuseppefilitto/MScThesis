@@ -1,21 +1,22 @@
 \documentclass{standalone}
 \begin{document}
-\subsection{Methods}
-During the year several segmentation methods have been developed\cite{biondi}.
-There are several ways to classify these methods.
+\subsection{Segmentation Methods Review}
+During the years several segmentation methods have been developed\cite{biondi}.
+There are various ways to classify these methods.
 For example, depending if they require or not a training set of data, they can be classified into \textit{supervised} or \textit{unsupervised} methods.
-More, they can be classified depending on the information type they use, like \textit{Pixel classification} methods, which use only information about pixel intensity, or \textit{Boundary following} methods which use edge information etc...\cite{biondi}.\\
-Among the most common ones:
+Moreover, they can be classified depending on the information type they use, like \textit{Pixel classification} methods, which use only information about pixel intensity, or \textit{Boundary following} methods that use edge information etc...\cite{biondi}.\\
+Among the most common ones we found:
 
-\paragraph{Thresholding}
-is a very simple and common approach to segmentation.
+\subsubsection{Thresholding}
+Thresholding is a very simple and common approach to segmentation.
 This method is applied on the \textit{histogram} of the image.
 The histogram of a digital image with intensity levels $L$ in the range $[0, \: L-1]$, is a discrete function $h(l_k) = n_k$ where $l_k$ is the k-th intensity value and $n_k$  is the number of pixels with intensity $l_k$.\\
-Thresholding consists in binarizing an image through an (if) clause on the intensity value of each point after having determined a threshold value $T \in [0, \: L-1]$.
-The threshold value $T$ is usually chosen by visual assessment on the image histogram but it can be automatize by algorithms like the \textit{Otsu algorithm}.
+Thresholding consists in binarizing an image through an (if) clause on the intensity value of each pixel.
+This is done setting a threshold value $T \in [0, \: L-1]$.
+The threshold value $T$ is usually chosen by visual assessment on the image histogram but it can be automatize by algorithms like the \textit{Otsu algorithm}.\\
 One drawback of this method is that some parts of the image can belong to the same class even if they belong to different objects.
 In fact, thresholding does not take into account the spatial characteristics of the image.
-Moreover, it is sensitive to noise and intensity inhomogeneity that corrupt the image histogram and make difficult the classification of pixels\cite{biondi}.
+Moreover, it is sensitive to noise and intensity inhomogeneity that can corrupt the image histogram and make difficult the classification of pixels\cite{biondi}.
 
 \begin{figure}[htp]
 
@@ -23,23 +24,61 @@ Moreover, it is sensitive to noise and intensity inhomogeneity that corrupt the 
     \includegraphics[width=.45\textwidth]{../images/thresholdhistogram.png}
     \includegraphics[width=.45\textwidth]{../images/thresholdexample.png}
     
-    \caption{Example of thresholding segmentation using Fiji software\cite{Fiji}. \\
-    \textit{ Left)} Image Histogram.\textit{ Right)} Result of thresholding.}
+    \caption{Example of thresholding segmentation on a Magnetic Resonance image of a patient affected by colorectal cancer using Fiji software\cite{Fiji}. \\
+    \textit{ Left):} Image Histogram and thresholding settings.\textit{ Right):} Result of thresholding. }
     \label{thresholding}
     
     \end{figure}
 
 
-\paragraph{Artificial Neural Networks} 
-are computational architectures derived from neural physiological models\cite{segmentationreview}.
-Artificial Neural Networks (ANNs) have evolved into a broad family of techniques.
-For visual analysis are usually used Convolutional Neural Networks (CNNs) based on \textit{convolution kernels} or \textit{filters} that slide along input data to extract feature maps\cite{wiki:cnn}.
+\subsubsection{Convolutional Neural Networks} 
+Convolutional Neural Networks (CNNs) are computational architectures commonly applied to analyze visual imagery.
+They belong to the class of Deep Neural Network, using a variation of the multilayer perceptrons.
+The word \textit{Convolutional} indicates that the network employs convolution operations.
+Convolutional Neural Networks architectures consist of an \textit{input layer}, \textit{hidden layers} and an \textit{output layer}.
+The hidden layers include convolutional layers.
+As the convolution kernel slides along the input matrix for the layer, the convolution operation generates a feature map, which in turn contributes to the input of the next layer\cite{CNN}.
+This process can be followed by other kind of layers such as \textit{Pooling layers},  \textit{Activation layers}, \textit{Fully Connected layers} as shown in Figure\ref{examplecnn}.
+The Pooling layer aims to reduce the dimensions of the feature maps. 
+The Activation layer consists in a pixel-wise non-linear function, usually the Rectified Linear Unit (ReLU).
+The Fully Connected layer connects every neuron in the previous layer to the neuron in the next layer. 
+This aims to collect all the relevant deep features for the classification.
+The last layer, the \textit{output layer}, provides the result of the classification of the network resulting in a vector containing the belonging probability score of the object to the classes.
+The most commonly used functions for this purpose are Sigmoid for binary predictions and Softmax for multi-labels ones:
+\begin{align}
+    Sigmoid(x) & = \frac{1}{1 + e^{-x}}  & Softmax(\mathbf{z})_i & = \frac{e^{\mathbf{z}_i}}{ \sum_{j=1}^{K} e^{\mathbf{z}_j}}
+\end{align}
+Other components of the network structure are the optimizers and the loss function. 
+Optimizer are methods responsible of changing the attributes of the neural network such as weights and learning rate to reduce the losses. 
+The most used is the Adaptive moment estimation (Adam). 
+The loss function affects the training phase, by evaluating the error rate.
+This function must be minimized. 
+Among the most common functions used there are the binary cross-entropy (BCE) used for binary classification and the categorical cross-entropy (CCE):
+\begin{align}
+    BCE(q) &= - \frac{1}{N} \sum_{i = 1}^{N} y_i \cdot log(p(y_i)) + (1 - y_i) \cdot log(1 - p(y_i)) \\ 
+    CCE(q) &=  \sum_{i = 1}^{K} q(y_i) \cdot log(p(y_i))
+\end{align}
+where for N data points and K classes, $y_i$ is the truth label and $p(y_i)$ is the Softmax or Sigmoid probability for the $i^{th}$ class.
+\\
+The performance of the network is achieved by a function called metric.
+Metric functions are similar to loss function but they do not have to be minimized.
+Among the metrics, one of the most used for segmentation purposes is the Dice Similarity Coefficient (DSC): 
+\begin{equation}
+    DSC = \frac{2 \mid X \cap Y \mid}{\mid X \mid + \mid Y \mid}
+\end{equation}\label{diceloss}
+where $\mid X \mid$ and $\mid Y \mid$ are the cardinalities of the given sets.
+\\
 Several architectures have been developed over the years, for different tasks and fields of application.
-In bio-medical image processing, the so-called U-Net\cite{unet}, is one of the most common architecture.
-U-Net is a kind of CNN which allows overcoming the requirement of many training data\cite{biondi, unet}.
-However a better explanation of ANNs will be provided in the following chapter.
+In bio-medical image processing, the so-called U-Net\cite{unet}, is one of the most common and used architecture.
 
+\begin{figure}[ht]
 
+    \centering
+    \includegraphics[width=\textwidth]{../images/cnnarchexample.png}
 
+    \caption{Example of Convolutional Neural Network architecture. As you can see the architecture is made by a series of layers. The input layer is followed by convolutional and max-pooling layers. Then, the fully connected layer and softmax one complete the structure. From \cite{Trebeschi2017}.}
+    \label{examplecnn}
+    
+    \end{figure}
 
 \end{document}

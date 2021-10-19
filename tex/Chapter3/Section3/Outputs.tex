@@ -1,0 +1,81 @@
+\documentclass{standalone}
+\begin{document}
+\section{Outputs}
+Once you have installed the implemented pipeline package, available on GitHub\cite{img-segm}, you can start to segment the images directly from your bash.
+There are different outputs options depending on the needing.
+
+\subsubsection{Quick Start}
+
+The input $\mathtt{dir}$ is the path of the dir containing the DICOM series
+
+\begin{lstlisting}[language = bash]
+python -m MRIsegm --dir='/path/to/input/series/'  
+\end{lstlisting}
+
+\begin{figure}[ht]
+
+    \centering
+    \includegraphics[width=\textwidth]{../images/example_quickstart.png}
+
+    \caption{Identified tumor area inside the red contours.}
+    \label{quickstart}
+    
+\end{figure}
+
+\subsubsection{mask}
+
+When enabled plot the predicted binary [0, 1] mask of each slice.
+
+\begin{lstlisting}[language = bash]
+python -m MRIsegm --dir='/path/to/input/series/'  --mask
+\end{lstlisting}
+
+\begin{figure}[ht]
+
+    \centering
+    \includegraphics[width=\textwidth]{../images/example_mask.png}
+
+    \caption{Binary mask of the segmented tumor area.}
+    \label{mask}
+    
+\end{figure}
+\newpage
+
+\subsubsection{density}
+
+When enabled plot the predicted probability map between 0. and 1. of each slice over the original image.
+
+\begin{lstlisting}[language = bash]
+python -m MRIsegm --dir='/path/to/input/series/'  --density
+\end{lstlisting}
+
+\begin{figure}[ht]
+
+    \centering
+    \includegraphics[width=\textwidth]{../images/example_density.png}
+
+    \caption{Probability map of the segmented tumor area.}
+    \label{density}
+    
+\end{figure}
+\newpage
+
+\subsubsection{3D}
+
+When enabled plot the 3D mesh of the segmented areas.
+
+\begin{lstlisting}[language = bash]
+python -m MRIsegm --dir='/path/to/input/series/'  --3D
+\end{lstlisting}
+
+\begin{figure}[ht]
+
+    \centering
+    \includegraphics[width=\textwidth]{../images/example_3D.png}
+
+    \caption{3D mesh of the segmented areas.}
+    \label{3D}
+    
+\end{figure}
+
+\end{document}

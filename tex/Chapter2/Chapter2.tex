@@ -1,25 +1,40 @@
 \documentclass{standalone}
 \begin{document}
 
-    % ARTIFICIAL NEURAL NETWORKS
+    % INTRO
     \input{./Chapter2/intro.tex}
+\newpage
+        % DESCRIPTION
+        \input{./Chapter2/Section1/Description.tex}
 
-        % CONVOLUTIONAL NEURAL NETWORKS
-        \input{./Chapter2/Section1/CNN.tex}
+            % PRE-PROCESSING
+            \input{./Chapter2/Section1/Subsection1/Pre-processing.tex}
+            \newpage
+            % CNN-TRAINING
+            \input{./Chapter2/Section1/Subsection1/Training.tex}
+            % SEGMENTATION
+            \input{./Chapter2/Section1/Subsection1/Segmentation.tex}
+            \newpage
+            % FEATURES EXTRACTION
+            \input{./Chapter2/Section1/Subsection1/featuresextraction.tex}
+            % FEATURES ANALYSIS
+            \input{./Chapter2/Section1/Subsection1/featuresanalysis.tex}
+    \newpage
+            % PREDICTION OF RESPONSE
+            \input{./Chapter2/Section1/Subsection1/Predictionresponse.tex}
+\newpage
+       % IMPLEMENTATION
+       \input{./Chapter2/Section2/Implementation.tex}
 
-            % ARCHITECTURE
-            \input{./Chapter2/Section1/Subsection1/arch.tex}
+            % PRE-PROCESSING
+            \input{./Chapter2/Section2/Subsection2/Pre_processing.tex}
 
-            % HYPERPARAMETERS
-            \input{./Chapter2/Section1/Subsection1/Hyperparams.tex}
+            % TRAINING AND SEGMENTATION
+            \input{./Chapter2/Section2/Subsection2/Training_and_segmentation.tex}
 
-            %
-            \input{./Chapter2/Section1/Subsection1/Regularization.tex}
+            % FEATURES EXTRACTION AND ANALYSIS
+            \input{./Chapter2/Section2/Subsection2/Features_extr_analysis.tex}
 
-        \newpage
-        % UNET
-        \input{./Chapter2/Section1/Unet.tex}
-
-
-
+            % PREDICTION OF RESPONSE
+            \input{./Chapter2/Section2/Subsection2/Prediction.tex}
 \end{document}
