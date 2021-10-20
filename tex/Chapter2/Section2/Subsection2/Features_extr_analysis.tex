@@ -73,7 +73,7 @@ Then, I uploaded the database containing clinical data to access the Tumor Regre
 Unfortunately, not for every patient data were available, so the patients rows without TRG values were dropped, thus excluded from the analysis.
 To overcome the lack of data, TRG values were binarized.
 In order to reduce features, PCA was performed setting $\mathtt{n\_components = .9}$ (meaning the number of components that gives the $90 \%$ of the toal variance) by using \textsc{Scikit-learn} library\cite{scikit}, exploiting $\mathtt{make\_pipeline}$ to standardize data before the PCA.
-Then, thanks to the attribute $\mathtt{components\_}$ , that outputs an array of shape $[ \mathtt{n \_ components} , \:  \mathtt{n \_ features} ]$, it is possible to get how components are related to the original features since each coefficient represents the correlation between a particular component and feature.
+Then, thanks to the attribute $\mathtt{components\_}$ , that outputs an array of shape $[ \mathtt{n \_ components} , \:  \mathtt{n \_ features} ]$, it is possible to get how components are related to the original features.
 
 \begin{lstlisting}[language = python, caption=PCA implementation]
 from sklearn.preprocessing import StandardScaler
