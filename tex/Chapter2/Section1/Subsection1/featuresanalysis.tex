@@ -10,8 +10,11 @@ The names of the features are set by \textsc{Pyradiomics}. In particular, the na
 In order to reduce the number of features, Principal Component Analysis (PCA) was performed on the data frame containing the extracted 100 features for each patient.
 The number of resulting features is 6, corresponding to the $90 \% $ of the total variance.
 Since Principal Components (PCs) are linear combinations of the original variables, it is not possible to recover the original features name. 
-However, thanks to the attribute $\mathtt{components\_}$ of the \textsc{Scikit-learn} library\cite{scikit}, that outputs an array of shape $[ \mathtt{n \_ components} , \:  \mathtt{n \_ features} ]$, it is possible to get how components are related to the original features and each coefficient represents the correlation between a particular component and feature.
-In figure \ref{importance}, you can see for each principal component (on the right), which is the original feature (on the left)  having the maximum correlation coefficient with. 
+However, thanks to the attribute $\mathtt{components\_}$ of the \textsc{Scikit-learn} library\cite{scikit}, that outputs an array of shape $[ \mathtt{n \_ components} , \:  \mathtt{n \_ features} ]$, it is possible to get how principal components are related to the original features.
+The importance of each feature is reflected by the magnitude of the corresponding values in the eigenvectors (higher magnitude — higher importance).
+To sum up, we look at the absolute values of the eigenvectors’ components corresponding to the k largest eigenvalues. The larger they are these absolute values, the more a specific feature contributes to that principal component.
+In figure \ref{importance}, you can see for each principal component (on the right), which is the original feature (on the left) that contributes more to the relative principal component.
+\\
 In particular: 
 \begin{itemize}
     \item For PC-0: glcm\_jointEntropy
@@ -21,6 +24,18 @@ In particular:
     \item For PC-4: glcm\_ldn
     \item For PC-5: shape\_Flatness
 \end{itemize}
+
+
+\begin{figure}[ht]
+
+    
+    \includegraphics[width=\textwidth]{../images/importance.png}
+
+    \caption{For each principal component (on the right), you can see which is the original feature (on the left)  that contributes more to the relative principal component.}
+    \label{importance}
+    
+    \end{figure}
+
 
 \begin{figure}[htp]
 
@@ -32,13 +47,5 @@ In particular:
     
     \end{figure}
 
-    \begin{figure}[ht]
 
-    
-        \includegraphics[width=0.99\textwidth]{../images/importance.png}
-    
-        \caption{For each principal component (on the right), you can see which is the original feature (on the left)  having the maximum correlation coefficient with.}
-        \label{importance}
-        
-        \end{figure}
 \end{document}
