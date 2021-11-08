@@ -4,10 +4,10 @@
 \begin{document}
 \subsection{Segmentation}
 Once trained, the CNN model was used for the segmentation of the MRI scans of each patient.
-As mentioned previously, before the segmentation, the scans are pre-processed to reduce noise, for the gamma correction, and to check if the image size is $512 \times 512$.
-During the pre-processing, as we know, the scans are also rescaled to binary floating-point 32-bit, required to work with \textsc{TensorFlow}, since the model is trained on images of that kind.
+Before the segmentation, the scans are pre-processed as previously described.
 \\
-The segmentation is done for each stack of slices of the patient using the trained CNN model to obtain the prediction.
+The segmentation is done slice by slice, for each patient, by using the trained CNN model to obtain the predicted tumor area.
+The prediction values range between 0 and 1.
 \\
 Then, using \textsc{OpenCV}\cite{opencv_library} functions it is possible to obtain a segmented area like the one in Figure \ref{contoured}, where the red contour represents the border of the predicted tumor area.
 
@@ -15,8 +15,8 @@ Then, using \textsc{OpenCV}\cite{opencv_library} functions it is possible to obt
 \begin{figure}[htp]
 
     \centering
-    \includegraphics[width=.49\textwidth]{../images/BO56_10_cont.png}
-    \includegraphics[width=.49\textwidth]{../images/BO85_7_cont.png}
+    \includegraphics[width=.49\textwidth]{../images/BO56_9_cont.png}
+    \includegraphics[width=.49\textwidth]{../images/BO85_6_cont.png}
     
     \caption{Images of colorectal cancer with identified tumor areas from two different patients. The red contour represents the border of the predicted tumor area.}
     \label{contoured}

@@ -2,9 +2,9 @@
 \begin{document}
 \subsection{Features Extraction and Analysis}
 
-For this purpose, I used the \textsc{Pyradiomics} library\cite{Pyradiomics} to extract features from each single slice of the patient after storing for each patient input and segmented images as 3D images (.nrrd format) in a dedicated directory, using \textsc{SimpleITK} library \cite{SimpleITK}, required by \textsc{Pyradiomics}. 
+For this purpose, I used the \textsc{Pyradiomics} library\cite{Pyradiomics} to extract features from each single slice of the patient after storing for each patient input and segmented images as 3D images (.nrrd format) in a dedicated directory, by using \textsc{SimpleITK} library \cite{SimpleITK}, required by \textsc{Pyradiomics}. 
 From each patient a total of 100 radiomic features were extracted.
-The extraction settings were stored in a $\mathtt{Params.yaml}$ file required by \textsc{Pyradiomics}.
+The extraction settings were stored in a $\mathtt{Params.yaml}$ file.
 \begin{lstlisting}[language = python, caption=Features extraction implementation]
 from radiomics import featureextractor
 import pandas as pd
@@ -34,8 +34,9 @@ for patient in good_patients:
     
 \end{lstlisting}
 
-Features are stored in a dictionary, which the key is the caseID of patient and the the name of the examination directory containing the dicom series.
-I started to visualize and sort the features for each patient and stored them into a pandas Dataframe $\mathtt{df}$ made by 100 columns (one for each extracted feature) and the number of rows made by the number of patients.
+Features are stored in a python dictionary.
+The key is a tuple made by the caseID of the patient and the the name of the examination directory containing the DICOM series.
+I started to visualize and sort the features for each patient for storing them into a pandas Dataframe $\mathtt{df}$ made by 100 columns (one for each extracted feature) and the number of rows made by the number of patients.
 
 \begin{lstlisting}[language = python, caption=Features dataframe implementation]
 

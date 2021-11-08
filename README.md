@@ -14,12 +14,16 @@ Master's Degree final dissertantion in Applied Physics
 ## Abstract
 
 Colorectal cancer is a malignant neoplasm of the large intestine resulting from the uncontrolled proliferation of one of the cells making up the colorectal tract. 
-In Western countries, colorectal cancer is the second largest malignant tumor after that of the breast in women and the third after that of the lung and prostate in men. 
-Risk factors for this kind of cancer include colon polyps, long-standing ulcerative colitis, diabetes II and genetic history (HNPCC or Lynch syndrome). 
+
 In order to get information about diagnosis, therapy evaluation on colorectal cancer, analysis on radiological images can be performed through the application of dedicated algorithms.
-In this scenario, the correct and fast identification of the cancer regions is a
-fundamental task. 
-Up to now this task is performed using manual or
-semi-automatic techniques, which are time-consuming and
-subjected to the operator expertise.
-The aim of this project is to provide an automated pipeline to predict the response to neo-adjuvant chemo-radiotherapy of patients affect by colorectal cancer.
+Up to now, this process is performed using manual or semi-automatic techniques, which are time-consuming and highly operator dependent.
+
+The aim of this project is to develop and apply an automated pipeline to predict the response to neoadjuvant chemo-radiotherapy of patients affected by colorectal cancer.
+Here, we propose an approach based on automatic segmentation and radiomic features extraction.
+The segmentation process exploits a Convolutional Neural Network like U-Net, trained with medical annotations to perform the segmentation of the tumor areas.
+Then, from the segmented regions, radiomic features are extracted and analyzed to obtain the prediction of response, based on the Tumor Regression Grade (TRG).
+
+We tested and developed our pipeline on MRI scans provided by the IRCCS Sant’Orsola-Malpighi Polyclinic.
+The performance of the pipeline was measured for the segmentation purpose and for the prediction of response.
+The results of these preliminary tests show that the pipeline is able to achieve a segmentation consistent with the medical annotations and a Dice Similarity Coefficient (DSC) coherent with literature.
+Even for the prediction of response, the results show that the pipeline is able to correctly classify most of the cases.

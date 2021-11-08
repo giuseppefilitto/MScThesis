@@ -1,13 +1,14 @@
 \documentclass{standalone}
 \begin{document}
 \section{Outputs}
-Once you have installed the implemented pipeline package, available on GitHub\cite{img-segm}, you can start to segment the images directly from your bash.
-There are different outputs options depending on the needing.
+Once you have installed the implemented pipeline package, available on GitHub\cite{img-segm}, you can get different outputs.
+This section is aimed to show the output results and how to get it from your shell.
 
-\subsubsection{Quick Start}
+\subsubsection{Red Contours Segmentation}
 
-The input $\mathtt{dir}$ is the path of the dir containing the DICOM series
-
+The output is the stack of segmented input slices.
+The input $\mathtt{dir}$ is the path of the dir containing the DICOM series.
+To get it:
 \begin{lstlisting}[language = bash]
 python -m MRIsegm --dir='/path/to/input/series/'  
 \end{lstlisting}
@@ -15,16 +16,21 @@ python -m MRIsegm --dir='/path/to/input/series/'
 \begin{figure}[ht]
 
     \centering
-    \includegraphics[width=\textwidth]{../images/example_quickstart.png}
+    \includegraphics[width=0.9\textwidth]{../images/example_redcont.png}
 
     \caption{Identified tumor area inside the red contours.}
     \label{quickstart}
     
 \end{figure}
 
+\clearpage
+\newpage
+
 \subsubsection{mask}
 
-When enabled plot the predicted binary [0, 1] mask of each slice.
+
+The output is the stack of predicted binary [0, 1] mask of input each slice.
+To get it:
 
 \begin{lstlisting}[language = bash]
 python -m MRIsegm --dir='/path/to/input/series/'  --mask
@@ -33,17 +39,20 @@ python -m MRIsegm --dir='/path/to/input/series/'  --mask
 \begin{figure}[ht]
 
     \centering
-    \includegraphics[width=\textwidth]{../images/example_mask.png}
+    \includegraphics[width=0.9\textwidth]{../images/example_mask.png}
 
     \caption{Binary mask of the segmented tumor area.}
     \label{mask}
     
 \end{figure}
+
+\clearpage
 \newpage
 
 \subsubsection{density}
 
-When enabled plot the predicted probability map between 0. and 1. of each slice over the original image.
+The output is the stack of probability map between 0. and 1. of each input slice over the original image.
+To get it:
 
 \begin{lstlisting}[language = bash]
 python -m MRIsegm --dir='/path/to/input/series/'  --density
@@ -52,17 +61,20 @@ python -m MRIsegm --dir='/path/to/input/series/'  --density
 \begin{figure}[ht]
 
     \centering
-    \includegraphics[width=\textwidth]{../images/example_density.png}
+    \includegraphics[width=0.9\textwidth]{../images/example_density.png}
 
     \caption{Probability map of the segmented tumor area.}
     \label{density}
     
 \end{figure}
+
+\clearpage
 \newpage
 
 \subsubsection{3D}
 
-When enabled plot the 3D mesh of the segmented areas.
+The output is a 3D mesh plot of the segmented areas.
+To get it:
 
 \begin{lstlisting}[language = bash]
 python -m MRIsegm --dir='/path/to/input/series/'  --3D
@@ -71,7 +83,7 @@ python -m MRIsegm --dir='/path/to/input/series/'  --3D
 \begin{figure}[ht]
 
     \centering
-    \includegraphics[width=\textwidth]{../images/example_3D.png}
+    \includegraphics[width=0.9\textwidth]{../images/example_3D.png}
 
     \caption{3D mesh of the segmented areas.}
     \label{3D}

@@ -1,11 +1,14 @@
 \documentclass{standalone}
 \begin{document}
 \subsection{Segmentation Methods Review}
-During the years several segmentation methods have been developed\cite{biondi}.
+Many segmentation methods have been developed over the years. 
+The choice of the best segmentation method depends by the particular type of image and characteristics of the problem being considered\cite{imagesegmentation}.
 There are various ways to classify these methods.
 For example, depending if they require or not a training set of data, they can be classified into \textit{supervised} or \textit{unsupervised} methods.
-Moreover, they can be classified depending on the information type they use, like \textit{Pixel classification} methods, which use only information about pixel intensity, or \textit{Boundary following} methods that use edge information etc...\cite{biondi}.\\
-Among the most common ones we found:
+Moreover, they can be classified depending on the information type they use, like \textit{Pixel classification} methods, which use only information about pixel intensity, or \textit{Boundary following} methods that use edge information etc...\cite{biondi}.
+\\
+At this point, I will provide a brief summary of one of the most common manual/semi-manual approach such as Thresholding. Then, I will focus on Convolutional Neural Networks and in particular on the U-Net architecture.
+
 
 \subsubsection{Thresholding}
 Thresholding is a very simple and common approach to segmentation.
@@ -18,67 +21,60 @@ One drawback of this method is that some parts of the image can belong to the sa
 In fact, thresholding does not take into account the spatial characteristics of the image.
 Moreover, it is sensitive to noise and intensity inhomogeneity that can corrupt the image histogram and make difficult the classification of pixels\cite{biondi}.
 
-\begin{figure}[htp]
-
-    \centering
-    \includegraphics[width=.45\textwidth]{../images/thresholdhistogram.png}
-    \includegraphics[width=.45\textwidth]{../images/thresholdexample.png}
-    
-    \caption{Example of thresholding segmentation on a Magnetic Resonance image of a patient affected by colorectal cancer using Fiji software\cite{Fiji}. \\
-    \textit{ Left):} Image Histogram and thresholding settings.\textit{ Right):} Result of thresholding. }
-    \label{thresholding}
-    
-    \end{figure}
-
-
 \subsubsection{Convolutional Neural Networks} 
 Convolutional Neural Networks (CNNs) are computational architectures commonly applied to analyze visual imagery.
 They belong to the class of Deep Neural Network, using a variation of the multilayer perceptrons.
 The word \textit{Convolutional} indicates that the network employs convolution operations.
-Convolutional Neural Networks architectures consist of an \textit{input layer}, \textit{hidden layers} and an \textit{output layer}.
-The hidden layers include convolutional layers.
-As the convolution kernel slides along the input matrix for the layer, the convolution operation generates a feature map, which in turn contributes to the input of the next layer\cite{CNN}.
-This process can be followed by other kind of layers such as \textit{Pooling layers},  \textit{Activation layers}, \textit{Fully Connected layers} as shown in Figure\ref{examplecnn}.
-The Pooling layer aims to reduce the dimensions of the feature maps. 
-The Activation layer consists in a pixel-wise non-linear function, usually the Rectified Linear Unit (ReLU).
-The Fully Connected layer connects every neuron in the previous layer to the neuron in the next layer. 
-This aims to collect all the relevant deep features for the classification.
+A typical Convolutional Neural Network architectures is made up of three main structures: an \textit{input layer} that is the set of data, \textit{hidden layers} and an \textit{output layer}.
+\\
+The hidden layers include different units.
+Among them we find convolutional layers, that consist of convolution kernel sliding along the input matrix.
+The convolution operation generates a feature map, which in turn contributes to the input of the next layer\cite{CNN}.
+This process can be followed by other kinds of layers such as \textit{Activation layers}, \textit{Pooling layers}, \textit{Up-convolution layers}, each one with a different purpose.
+For example, the Pooling layer aims to reduce the dimensions of the feature maps; the Activation layer, consists of a pixel-wise non-linear function, usually the Rectified Linear Unit (ReLU); the Up-convolution layers aims to up-sample the feature maps.
+The choice of the layers depends on the characteristics of the problem and the kind of network architecture considered.
+\\
 The last layer, the \textit{output layer}, provides the result of the classification of the network resulting in a vector containing the belonging probability score of the object to the classes.
-The most commonly used functions for this purpose are Sigmoid for binary predictions and Softmax for multi-labels ones:
-\begin{align}
-    Sigmoid(x) & = \frac{1}{1 + e^{-x}}  & Softmax(\mathbf{z})_i & = \frac{e^{\mathbf{z}_i}}{ \sum_{j=1}^{K} e^{\mathbf{z}_j}}
-\end{align}
+For this purpose, different functions can be used \cite{camborata}.
+In particular, for binary segmentation tasks, one of the most used is the Sigmoid function:
+\begin{equation}
+    Sigmoid(x) = \frac{1}{1 + e^{-x}}
+\end{equation}
 Other components of the network structure are the optimizers and the loss function. 
 Optimizer are methods responsible of changing the attributes of the neural network such as weights and learning rate to reduce the losses. 
-The most used is the Adaptive moment estimation (Adam). 
-The loss function affects the training phase, by evaluating the error rate.
+The most used is the Adaptive moment estimation (Adam)\cite{jovana}. 
+\\
+The loss function affects the training phase by evaluating the error rate.
 This function must be minimized. 
-Among the most common functions used there are the binary cross-entropy (BCE) used for binary classification and the categorical cross-entropy (CCE):
+Popular loss functions for segmentation purposes include the binary cross-entropy (BCE) and the Categorical Cross-Entropy (CCE):
+
 \begin{align}
     BCE(q) &= - \frac{1}{N} \sum_{i = 1}^{N} y_i \cdot log(p(y_i)) + (1 - y_i) \cdot log(1 - p(y_i)) \\ 
     CCE(q) &=  \sum_{i = 1}^{K} q(y_i) \cdot log(p(y_i))
 \end{align}
-where for N data points and K classes, $y_i$ is the truth label and $p(y_i)$ is the Softmax or Sigmoid probability for the $i^{th}$ class.
+where for N data points and K classes, $y_i$ is the truth-label and $p(y_i)$ is the probability for the $i^{th}$ class.
 \\
-The performance of the network is achieved by a function called metric.
-Metric functions are similar to loss function but they do not have to be minimized.
-Among the metrics, one of the most used for segmentation purposes is the Dice Similarity Coefficient (DSC): 
+However, we can choose between a wide range of different loss functions\cite{camborata}.
+In particular, for this project the loss function consists of the combination between the Dice loss with the binary focal loss\cite{focal}.
+The former comes from the Dice similarity coefficient (DSC):
 \begin{equation}
-    DSC = \frac{2 \mid X \cap Y \mid}{\mid X \mid + \mid Y \mid}
-\end{equation}\label{diceloss}
-where $\mid X \mid$ and $\mid Y \mid$ are the cardinalities of the given sets.
+    DL(y, \hat{p}) = 1 - \frac{2y\hat{p} + 1}{y + \hat{p} + 1}
+\end{equation}
+where $y$ is the the truth-label and $\hat{p}$ is the the predicted probability.
+Here, 1 is added in numerator and denominator to ensure that the function is not undefined in edge case scenarios such as when $y = \hat{p} = 0$.
+\\
+The latter instead can be defined: 
+\begin{equation}
+    FL(y, \hat{p}) = - \alpha y(1 - \hat{p})^{\gamma}log(\hat{p}) - \alpha (1 - y) \hat{p}^{\gamma}log(1 - \hat{p})
+\end{equation}
+where $y$ is the the truth-label, $\hat{p}$ is the predicted probability, $\alpha$ is weighting factor and $\gamma$ a focusing parameter.
+\\
+The performance of the network is measured by a function called metric.
+Metric functions are similar to loss function but they do not have to be minimized.
 \\
 Several architectures have been developed over the years, for different tasks and fields of application.
-In bio-medical image processing, the so-called U-Net\cite{unet}, is one of the most common and used architecture.
+In bio-medical image processing, the so-called U-Net, is one of the most common and used architecture\cite{unet}.
 
-\begin{figure}[ht]
 
-    \centering
-    \includegraphics[width=\textwidth]{../images/cnnarchexample.png}
-
-    \caption{Example of Convolutional Neural Network architecture. As you can see the architecture is made by a series of layers. The input layer is followed by convolutional and max-pooling layers. Then, the fully connected layer and softmax one complete the structure. From \cite{Trebeschi2017}.}
-    \label{examplecnn}
-    
-    \end{figure}
 
 \end{document}

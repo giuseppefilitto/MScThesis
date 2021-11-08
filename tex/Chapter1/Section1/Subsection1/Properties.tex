@@ -4,23 +4,26 @@
 The physical meaning of the image data depends on the performed image modality.
 For example, Computed Tomography (CT) and Magnetic Resonance Imaging (MRI), give structural information about the anatomy of the patient.
 Other techniques, such as Positron Emission Tomography (PET) or Functional Magnetic Resonance Imaging (fMRI) give information about the functional properties of the patient's target organs. 
-However, we can distinguish some general characteristics of digital images:
+However, we can distinguish some general characteristics which involve both the acquisition modalities.
 
-\paragraph{Pixel depth} is the number of bits used to encode the values of each pixel and it is related to the memory space used to store the amount of the encoded information\cite{Larobina}. 
+\subsubsection{Pixel depth} 
+It is the number of bits used to encode the values of each pixel and it is related to the memory space used to store the amount of the encoded information\cite{Larobina}. 
 Higher the number of bits, higher the information stored but more memory space is required\cite{Larobina}. 
 A group of 8 bits is called \textit{byte} and represent the smallest quantity that can be stored in the memory of a computer.
-For example, if an image has a pixel depth of 16 or 12 bits the computer will always store two bytes per pixel\cite{Larobina}.
+For example, if an image has a pixel depth of 16 or 12 bits the computer will always store two bytes per pixel with the drawback of an higher memory space required for the storage\cite{Larobina}.
 With a pixel depth of 8 bits it is possible to codify and store integer numbers between 0 and 255 $(2^8-1)$.
 There are also two formats for the encoding in binary of floating-point numbers: single precision 32-bit and double precision 64-bit.
 
-\paragraph{Pixel data} represent numerical values of the pixels stored according to the data type.
-Pixel data can be complex values even if this data type is not common and can be bypassed by storing the real and imaginary parts as separate images.
+\subsubsection{Pixel data} 
+Pixel data represent numerical values of the pixels stored according to the data type.
+Pixel data can be complex values even if this data type is not common and can be bypassed by storing the real and imaginary parts as individual images.
 For example, complex data are provided in MRI acquired data before the reconstruction (the so called k-space)\cite{Larobina}.
 
 
-\paragraph{Metadata} are information that describe the image. It is usually stored at the beginning of the file as a header\cite{Larobina}. 
+\subsubsection{Metadata} 
+Metadata are information that describe the image and the acquisition process used. It is usually stored at the beginning of the file as a header\cite{Larobina}. 
 In the case of medical images, metadata have an important role due to the nature of the images.
-For example, a magnetic resonance image might have parameters related to the pulse sequence used, timing information, number of acquisitions while a PET image might have information about the radiopharmaceutical injected and the weight of the patient.
+For example, a magnetic resonance image might have parameters related to the pulse sequence used, timing information, number of acquisitions while a PET image might have information about the radiopharmaceutical injected to the patient.
 
 
 \end{document}

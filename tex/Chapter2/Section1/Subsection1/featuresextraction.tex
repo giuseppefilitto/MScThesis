@@ -3,7 +3,8 @@
 \subsection{Features Extraction}
 
 This step consists of the extraction of the radiomic features from the images.
-For this purpose the MRI scans of each patient and the segmented images are saved, by using \textsc{SimpleITK} library \cite{SimpleITK}, as 3D images in a particular format (.nrrd) required by \textsc{Pyradiomics} library \cite{Pyradiomics} to extract features from every single slice of the patient. 
+For this purpose, the original MRI scans of each patient and the segmented ones are saved, as 3D images in a particular format (.nrrd) required by \textsc{Pyradiomics} library \cite{Pyradiomics} to extract features from the segmented areas of every single slice of the patient. 
+\\
 From each patient, a total of 100 radiomic features were extracted.
 The extraction settings were stored in a $\mathtt{Params.yaml}$ file required by \textsc{Pyradiomics}.
 The data were then stored in a data frame containing 100 columns (one for each feature) and 48 rows (one for each patient) ready for the analysis step.

@@ -1,17 +1,28 @@
 \documentclass{standalone}
 \begin{document}
 \section{Segmentation}
-Image segmentation is the partitioning of an image into non-overlapping consistent regions that are homogeneous to some characteristics, such as intensity or texture\cite{biondi}.
-The results of segmentation can be used to perform image feature extraction, which provides fundamental information about organs or lesion volumes, to monitor the evolution of a particular disease, and/or to evaluate the effects of therapeutical treatment.
-Therefore, segmentation plays a crucial role for clinicians in identifying diseases such as tumors.
-Segmentation, depending on the technique, can be manual, semi-manual, or automatic:
 
-\paragraph{Manual} techniques are still the most reliable and precise methods but they are time-consuming, highly operator-dependent, and subject to operator expertise\cite{tesicoppola}.
+Image segmentation refers to the process of partitioning a digital image into multiple segments (i.e. set of pixels),  regions or objects so as to change the representation of an image into something that is more meaningful and easier to analyze. Pixels in a region are similar according to some homogeneity criteria such as colour, intensity or texture, so as to locate and identify objects and boundaries in an image\cite{imagesegmentation}.
+\\
+Image segmentation applications range from medical filed (i.e locate tumors and other pathologies, study of anatomical structure), object detection in satellite images (roads, forests, cars), face recognition, finger print recognition, etc...
+\\
+In general, segmentation, depending on the technique, can be manual, semi-manual, or automatic:
 
-\paragraph{Semi-Manual} techniques are faster compared to manual ones.
-They are based on traditional image processing methods such as thresholding and clustering. However, despite the time savings they are operator-dependent\cite{tesicoppola}.
+\subsubsection{Manual Segmentation}
+Manual techniques are still the most reliable and precise methods but they are time-consuming, highly operator-dependent, and require expert operators\cite{tesicoppola}.
+Examples of manual segmentation techniques include partitioning an image selecting manually the border of pixels belonging to a specific region or object (i.e tumors in medical images).
 
-\paragraph{Automatic} techniques are the faster methods compared to manual and semi-manual ones. Moreover, they are not operator-dependent. However, the implementation of the algorithms is harder to perform\cite{tesicoppola}. 
+\subsubsection{Semi-Manual Segmentation}
+Semi-Manual techniques are faster compared to manual ones.
+They are based on traditional image processing methods such as thresholding and clustering. 
+Despite the time savings they are still operator-dependent\cite{tesicoppola}.
+Moreover, techniques such as thresholding do not take into account the spatial characteristics of the image so it is not always possible to get the desired partitioning.
+
+\subsubsection{Automatic Segmentation}
+Automatic segmentation involve faster techniques compared to manual and semi-manual ones. 
+Moreover, they are not operator-dependent. 
+Among them we find Convolutional Neural Networks.
+However, the implementation of the networks ad algorithms is harder to perform\cite{tesicoppola}. 
 
 
 \end{document}

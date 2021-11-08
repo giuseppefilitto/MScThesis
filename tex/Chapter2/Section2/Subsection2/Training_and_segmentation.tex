@@ -2,10 +2,11 @@
 \begin{document}
 \subsection{Training and Segmentation}
 
-Training a was performed using \textsc{TensorFlow}\cite{Tensorflow} and \textsc{Segmentation-models} API\cite{segmentation_models}.
-The core of the training process is the custom $\mathtt{DataGenerator}$, which provides data, split them into training and validation set, perform pre-processing and data augmentation on the training set.
+Training was performed using \textsc{TensorFlow}\cite{Tensorflow} and \textsc{Segmentation-models} API\cite{segmentation_models}.
+The core of the training process is the custom $\mathtt{DataGenerator}$, which provides data, split them into training and validation sets, pre-processes the images, and performs data augmentation on the training set.
+Data augmentation consists of the random vertical or horizontal flip of the input and label images.
 The peculiarity consists of the capability of working directly with DICOM input files.
-The input and label images are taken directly by the $\mathtt{DataGenerator}$, providing the relative $\mathtt{source\_path}$ and $\mathtt{label\_path}$ that are the paths of the directories containing the relative DICOM input and labels images.
+The input and label images are taken directly by the $\mathtt{DataGenerator}$, providing the relative $\mathtt{source\_path}$ and $\mathtt{label\_path}$. They are the paths of the directories containing the relative DICOM input and label images.
 
 \begin{lstlisting}[language = python, caption=Custom $\mathtt{DataGenerator}$ implementation]
 import tensorflow as tf

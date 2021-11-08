@@ -2,7 +2,8 @@
 \begin{document}
 \subsection{Pre-processing}
 
-As we said in the Description section, the pre-processing consists of the application of a smoothing filter and a gamma correction.
+As we said in the previous section, the main steps of the pre-processing consist of the application of the non local-means algorithm and gamma correction.
+\\
 Before the processing operations, for each patient, the images needed to be read from the DICOM files as an array of pixels in order to apply the pre-processing functions.
 This was done by the function $\mathtt{get\_slices}$: 
 
@@ -39,9 +40,9 @@ def get_slices(dir_path)
 \end{lstlisting}
 
 For this purpose, I used the \textsc{Numpy} \cite{Numpy} and \textsc{Pydicom} \cite{Pydicom} libraries.
-In particular, \textsc{Pydicom} provided functions to read DICOM files as pixel arrays and to access the \textit{InstanceNumber} (the current slice number stored in the header), while \textsc{Numpy} provided functions to sort the slices \textit{InstanceNumber} and get the images as an array of shape: (depth, height, width) where depth is the number of slices and (height, width) the image size.
+In particular, \textsc{Pydicom} provided functions to read DICOM files as pixel arrays and to access the \textit{InstanceNumber} (the current slice number stored in the header), while \textsc{Numpy} provided functions to sort the slices by the \textit{InstanceNumber} and get the images as an array of shape: (depth, height, width) where depth is the number of slices and (height, width) the image size.
 \\
-Once the images have been obtained, I could perform the steps described in the Description section:
+Once the images have been obtained, I could perform the following steps :
 \begin{itemize}
     \item normalization and rescaling
     \item denoising
@@ -99,7 +100,7 @@ def pre_processing_data(slices, alpha=10):
 
 \end{lstlisting}
 
-In particular, the $\mathtt{rescale}$ function is used for the normalization and the rescaling of the images to binary floating-point 32-bit; the $\mathtt{denoise}$ function is used for the denoising process exploiting the \textsc{Scikit-Image} library; the $\mathtt{gamma\_correction}$ function is used for the gamma correction, thus increase/decrease the brightness of the image, depending on gamma.
+In particular: the $\mathtt{rescale}$ function is used for the normalization and the rescaling of the images to binary floating-point 32-bit; the $\mathtt{denoise}$ function is used for the denoising process exploiting the \textsc{Scikit-Image} library; the $\mathtt{gamma\_correction}$ function is used for the gamma correction.
 All these three functions have been put together into $\mathtt{pre\_processing\_data}$ with a silent check on the image size, to get a single-shot pre-processing function.
 The final output is an array, like $\mathtt{slices}$, containing the relative pre-processed images.
 

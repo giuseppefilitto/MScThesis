@@ -2,31 +2,24 @@
 \begin{document}
 \subsection{Segmentation}
 
-The accuracy metric for the segmentation results is given by the Dice Similarity Coefficient (DSC) evaluated on the validation set.
+The metric used for checking the performance of the segmentation results is given by the Dice Similarity Coefficient (DSC) evaluated on the validation set.
+This is because it was the most used in literature for this purpose and so for make it possible results comparison.
+The total number of involved patients lowered from 48 to 37 because of misregistration between images and medical annotations for some of them.
 The training process was performed for 150 epochs\footnote{The term epoch indicates the number of passes of the entire training dataset the machine learning algorithm has completed.} on 391 images (training set) and validated on 97 images (validation set).
 The Training process took almost 7 hours, on the new Apple Silicon M1 Macbook Pro equipped with 8 GB of RAM.
-The results can be seen in Figure \ref{training}.
+The results of the training process can be seen in Figure \ref{training}.
 The plots show the curves for the model dice coefficient and the model loss as a function of the epochs.
-In particular, the blue curve represents the result obtained for the training set of data while the green one represents the result obtained for the validation set.
-As you can see, the blue and green curves almost overlap to the end, meaning the model generalizes quite well.
-In fact, when the distance between the two curves starts to increase, the model stops generalizing, resulting in the phenomenon of data overfitting.
+In particular, the blue curve represents the results obtained for the training set of data while the green one represents the results obtained for the validation set.
 \\
-In Table \ref{results}, you can see the comparison between the state of the art and the implemented pipeline about the accuracy.
-It must be said that the literature about MRI colorectal cancer segmentation using CNNs, unlike other topics, is not very wide.
-However, it comes out that automatic segmentation is quite hard to perform on Magnetic Resonance colorectal cancer images due to different issues: 
-\begin{itemize}
-	\item Data: \textit{mucinous} cases lower the performances
-	\item Medical annotations
-	\item Loss function
-\end{itemize}
-
+In Table \ref{results}, you can see the comparison between the state of the art and the implemented pipeline about colorectal cancer segmentation.
+It must be said that the literature about MRI colorectal cancer segmentation performed by using CNNs, unlike other topics, is not very wide.
+However, it comes out that automatic segmentation is quite hard to perform on Magnetic Resonance colorectal cancer images due to different issues: data; medical annotations; loss function.
 In fact, as showed by Jovana Panic at al.\cite{jpanic} mucinous cases can considerably affect the performances.
-\textit{Mucinous} consists of tumor subtype characterized by bright tumoral areas on MRI scans, different from the \textit{adenocarcinomas} characterized by dark tumoral areas.
+\textit{Mucinous} consists of a tumor subtype characterized by bright tumoral areas on MRI scans, different from the \textit{adenocarcinomas} characterized by dark tumoral areas.
 Moreover, the performance can be affected by how medical annotations are made.
-Trebeschi et al. \cite{Trebeschi2017} showed that the DSC of the same model trained using medical annotations made by different experts can give different DSC scores: DSC=0.68 (expert 1) and DSC=0.70 (expert 2).
+Trebeschi et al. \cite{Trebeschi2017} showed that the DSC of the same model trained using medical annotations made by different experts can give different DSC scores.
 Another sensitive factor is the loss function. 
-As shown by Yi. Jie Huang et al.\cite{YiJieHuang}, depending on the network's architectures and the loss functions you can have different performances.\\
-Despite having not so much data and the presence of \textit{mucinous} cases my implementation got a score of DSC = 0.71 which is consistent and among the highest of literature.
+As shown by Yi. Jie Huang et al.\cite{YiJieHuang}, depending on the network's architectures and the loss functions you can have different performances. 
  
 \begin{table}[ht]
 	\Large
@@ -45,7 +38,7 @@ Despite having not so much data and the presence of \textit{mucinous} cases my i
 	\bottomrule
 	\end{tabular}}
 
-	\caption{Results comparison between state of the art and the implemented pipeline about MRI colorectal cancer segmentation accuracy.}
+	\caption{Results comparison between state-of-art and the implemented pipeline about MRI colorectal cancer scans segmentation by using CNNs.}
 	\label{results}
 	
 \end{table}
@@ -57,26 +50,24 @@ Despite having not so much data and the presence of \textit{mucinous} cases my i
     \includegraphics[width=0.49\textwidth]{../images/dice_coef.png}
 	\includegraphics[width=0.49\textwidth]{../images/loss.png}
 
-    \caption{Training (blue) and validation (green) model history plots.\textit{Left}): model dice coefficient as a function of the epochs.\textit{Right}): model loss as a function of the epochs.}
+    \caption{Model history plots on training (blue) and validation (green) set. \textit{Left}): DSC as a function of the epochs. \textit{Right}): model loss as a function of the epochs.}
     \label{training}
     
 \end{figure}
-	
+\clearpage
 \newpage
 
 \subsubsection{Comparison with Manual Annotations}
 
 
-To check the pipeline performances, I have also compared the obtained segmentation with the manual annotation (Ground-truth).
+To check the pipeline performances, I have also compared the obtained segmentation with the manual annotation (Ground-truth) made by expert radiologists.
 In Figure \ref{predtraining}, you can see the comparison for images belonging to the training set while in Figure \ref{predvalidation} the comparison for the ones belonging to the validation set.
-The first column represents the input image. 
-The second one represents the ground-truth image. 
-Finally, the third one represents the predicted tumor area.
 The prediction is plotted as a probability density map between 0. and 1. as shown by the sequential colormap.
-The segmentation performed by the model is consistent with the ground-truth one.
 Both in Figure \ref{predtraining} and \ref{predvalidation}, I also included a case of \textit{mucinous} (first row), showing that the model is able to distinguish also this type of tumor, even if the contour is not as precise as the ground-truth one.
-Unfortunately, for a few cases, the model failed to segment correctly the correct Region of Interest (ROI).
-Some of them are shown in Figure \ref{predwrong}.\\
+\\
+Unfortunately, for a few cases, the model failed to segment correctly the right Region of Interest (ROI).
+Some of this cases are shown in Figure \ref{predwrong}.
+\\
 The goodness of the comparison can also be appreciated from the comparison between the ground truth and the prediction over the original image.
 In Figure \ref{predoverlaptraining} and \ref{predoverlaptraining2} the images belong to the training set while in Figure \ref{predoverlapvalidation} and \ref{predoverlapvalidation2} the images belong to the validation one.
 Also for this case, the prediction is plotted as a probability density map between 0. and 1. as shown by the sequential colormap.

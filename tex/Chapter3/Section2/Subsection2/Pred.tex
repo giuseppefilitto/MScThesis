@@ -2,36 +2,15 @@
 \begin{document}
 \subsection{Prediction of Response}
 
-In order to measure the accuracy of the classification for each class (Class 0 for complete response and Class 1 for moderate response), I used different metrics: 
-\subsubsection{Precision}
-Intuitively, it is the ability of the classifier not to label as positive a sample that is negative: 
-\begin{equation*}
-    Precision = \frac{tp}{tp + fp}
-\end{equation*}
-
-\subsubsection{Recall}
-Intuitively, it is the ability of the classifier is the ability of the classifier to find all the positive samples: 
-\begin{equation*}
-    Precision = \frac{tp}{tp + fn}
-\end{equation*}
-
-\subsubsection{F1-Score}
-It is the harmonic mean of the precision and recall: 
-\begin{equation*}
-    F1\mathtt{-}Score = 2 \cdot \frac{precision \cdot recall}{precision + recall}
-\end{equation*}
+The accuracy for the prediction of response was measured by using different metrics.
 \\
-
-where $tp$ is the number of true positives and $fn$ the number of false negatives.
+In Table \ref{tab:classreport} you can see the classification report made by the Precision, Recall, and F1 score for each class (Class 0 for complete response and Class 1 for moderate response).
 \\
+Unfortunately, the TRG value was missing for some patients, therefore some of them were excluded from the analysis.
+In the end, the total number of patients was 32, that is the sum of the \textit{support} column values for Class 0 and Class 1.
 \\
-The results are shown in Table \ref{tab:classreport}, where for each class you get the relative score.
-The \textit{support} column indicates the population for that class.
-As you can see, for Class 0 the scores are lower compared to Class 1 but also the \textit{support} is lower since the cases of a complete response were less compare to the number of case of a moderate one.
-The sum of the \textit{support} is 32 corresponding to the number of patients involved into the analysis.
-
-
-
+The classifier model was cross-validated to avoid the presence of \textit{bias} during the split into training and test set of the data on 500 simulations, evaluating the Matthews Correlation coefficient (MCC).
+The result is a distribution of the MCC, that you can see in Figure \ref{MCC}, with a median $MCC=0.55$ .
 
 \begin{table}[ht]
 	\centering
@@ -48,10 +27,21 @@ The sum of the \textit{support} is 32 corresponding to the number of patients in
 	\label{tab:classreport}
 \end{table}
 
+
+
+\begin{figure}[ht]
+
+	\centering
+	\includegraphics[width=0.65\textwidth]{../images/MCC.png}
+
+	\caption{Matthews Correlation coefficient distribution for the pipeline obtained after 500 simulations.}
+	\label{MCC}
+	
+	\end{figure}
+
+
 \newpage
-I also computed the confusion matrix (or error matrix), in Figure \ref{confmatrix}, to evaluate the accuracy of the classification.
-Each row of the matrix represents the instances in an actual class while each column represents the instances in a predicted class.
-As you can see from the confusion matrix, on the diagonal you have the number of well-classified instances while on the anti-diagonal the wrong-classified ones.
+I also computed the confusion matrix , in Figure \ref{confmatrix}, to evaluate the accuracy of the classification.
 For Class 0, so for a complete response, the well-classified instances are 10 over a total of 13, thus the wrong-classified ones are 3.
 For Class 1, so for a moderate response, the well-classified instances are 15 over a total of 19, thus the wrong-classified ones are 4.
 
@@ -59,34 +49,25 @@ For Class 1, so for a moderate response, the well-classified instances are 15 ov
 \begin{figure}[htp]
 
     \centering
-    \includegraphics[width=0.75\textwidth]{../images/confmatrix.png}
+    \includegraphics[width=0.8\textwidth]{../images/confmatrix.png}
 
     \caption{Confusion Matrix. The rows of the matrix represents the instances in an actual class while each column represents the instances in a predicted class. Class 0 means a complete response while Class 1 a moderate one. }
     \label{confmatrix}
     
 \end{figure}
 
-
-The diagnostic ability of the classifier was also measured by the Receiver Operating Characteristic curve, or ROC curve.
-The ROC curve is created by plotting the true positive rate (TPR) against the false positive rate (FPR).
-By analyzing the ROC curves, the ability of the classifier to discern, for example, between a set A and B of population, is assessed, calculating the area under the ROC curve: Area Under Curve, (AUC). 
-The AUC value, between 0 and 1, is equivalent to the probability that a classifier will rank a randomly chosen positive instance higher than a randomly chosen negative one.
-The ROC curves pass through the points (0,0) and (1,1), (0,1) and (1,1) represent two limit curves:
-\begin{itemize}
-    \item The first cuts the graph at $45$ degrees, representing the case of the random classifier ("no benefit" line), with the AUC equal to 0.5.
-    \item The second curve is represented by the segment that from the origin rises to the point (0,1) and by the one that connects the point (0,1) to (1,1), having the AUC equal to 1, meaning a perfect classifier.
-\end{itemize}
-In Figure \ref{ROC}, the ROC curve for the classifier is shown.
-As you can see, the AUC both for classes is 0.82, greater than 0.5 which would correspond to a random classifier, that would give no benefit. 
-I computed the average curve for Class 0 and Class 1, both considering class imbalance (micro-average) and not considering it, so giving the same weight to the classes (macro-average). 
-Also for this case the AUC is greater than 0.5, meaning that the classifier prediction gives more benefit than a random one.
+The diagnostic ability of the classifier was also measured by computing the Receiver Operating Characteristic curve, or ROC curve, in Figure \ref{ROC}.
+As you can see, the AUC for both the classes is 0.82.
+I computed the average curve for Class 0 and Class 1, both by taking into account class imbalance (micro-average) and by giving the same weight to the classes (macro-average). 
 
 \begin{figure}[htp]
 
     \centering
-    \includegraphics[width=0.75\textwidth]{../images/ROC.png}
+    \includegraphics[width=0.8\textwidth]{../images/ROC.png}
 
-    \caption{Receiver Operating Characteristic curve, or ROC curve.}
+    \caption{Receiver Operating Characteristic curve, or ROC curve.
+	Class 0 indicates a complete response to chemo-radiotherapy while Class 1 a moderate one.
+	The average curve for Class 0 and Class 1, is computed both by taking into account class imbalance (micro-average) and also by giving the same weight to the classes (macro-average).}
     \label{ROC}
     
 \end{figure}

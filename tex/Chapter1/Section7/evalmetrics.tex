@@ -1,0 +1,82 @@
+\documentclass{standalone}
+\begin{document}
+\markboth{CHAPTER 1. MATERIALS AND METHODS}{1.7. METRICS}
+\section{Performance Evaluation Metrics}
+
+Performance evaluation metrics refer to a series of methods used to measure the performance of the developed pipeline.
+This section is aimed at their definition.
+\subsubsection{Precision}
+
+The precision is the ratio between true positives $tp$ and the sum between true positives $tp$ with false positives $fp$.
+The precision is intuitively the ability of the classifier to label not as positive a sample that is negative.
+The best value is 1 and the worst value is 0.
+
+\begin{equation*}
+    Precision = \frac{tp}{tp + fp}
+\end{equation*}
+
+
+\subsubsection{Recall}
+
+The recall is the ratio between true positives $tp$ and the sum between true positives $tp$ with false negatives $fn$.
+The recall is intuitively the ability of the classifier to find all the positive samples.
+The best value is 1 and the worst value is 0.
+
+\begin{equation*}
+    Recall = \frac{tp}{tp + fn}
+\end{equation*}
+
+
+\subsubsection{Dice Similarity Coefficient}
+The Dice Similarity Coefficient or Dice-Sørensen coefficient (DSC) is a widely used metric in computer vision community to calculate the similarity between two images\cite{diceloss}.
+Given two sets, X and Y, it is defined as:
+
+\begin{equation*}
+    DSC = 2 \cdot \frac{\mid  X \cap  Y \mid }{\mid X \mid + \mid  Y \mid }
+\end{equation*}
+where $\mid X \mid $ and  $\mid  Y \mid$  are the cardinalities of the two sets (i.e. the number of elements in each set). 
+\\
+Using the definition of true positive $tp$, false positive $fp$, and false negative $fn$, it can be written as:
+
+\begin{equation*}
+    DSC = \frac{2 tp}{2tp + fp + fn}
+\end{equation*}
+The best value is 1, meaning a perfect overlap between the two sets (i.e. ground-truth and predicted), while the worst value is 0 meaning no overlap.
+\\
+The Dice Similarity Coefficient is also known as F1-Score, and using the definition of \textit{precision} and \textit{recall} can be written as:
+
+\begin{equation*}
+    F1 = 2 \cdot \frac{precision \times recall}{precision + recall}
+\end{equation*}
+
+\markboth{CHAPTER 1. MATERIALS AND METHODS}{1.7. METRICS}
+
+\subsubsection{Matthews correlation coefficient}
+The Matthews correlation coefficient (MCC) is a measure of the quality of binary (two-class) classifications.
+The MCC is a correlation coefficient ranging between -1 and +1. 
+A coefficient of +1 represents a perfect prediction, 0 is an average random prediction, and -1 is an inverse prediction.
+The MCC, using the definition of true positive $tp$, false positive $fp$, true negatives $tn$, and false negative $fn$,can be calculated by:
+
+\begin{equation*}
+    MCC = \frac{tp \times tn - fp \times fn}{ \sqrt{(tp + fp)(tp + fn)(tn + fp)(tn + fn)}}
+\end{equation*}
+
+
+\subsubsection{Confusion Matrix}
+
+The Confusion Matrix is a specific table that allows visualization of the performance of an algorithm.
+Each row of the matrix represents the instances in an actual class while each column represents the instances in a predicted class.
+The diagonal elements represent the number of points for which the predicted label is equal to the true label, while off-diagonal elements are those that are mislabeled by the classifier. 
+
+\subsubsection{Receiver Operating Characteristic curve}
+
+The Receiver Operating Characteristic curve, or ROC curve is created by plotting the true positive rate (TPR) against the false positive rate (FPR).
+By analyzing the ROC curves, the ability of the classifier to discern, for example, between a set A and B of population, is assessed, calculating the area under the ROC curve (AUC). 
+The AUC value, between 0 and 1, is equivalent to the probability that a classifier will rank a randomly chosen positive instance higher than a randomly chosen negative one.
+The ROC curves pass through the points (0,0) and (1,1), (0,1) and (1,1) represent two limit curves:
+\begin{itemize}
+    \item The first cuts the graph at $45$ degrees, representing the case of the random classifier ("no benefit" line), with the AUC equal to 0.5.
+    \item The second curve is represented by the segment that from the origin rises to the point (0,1) and by the one that connects the point (0,1) to (1,1), having the AUC equal to 1, meaning a perfect classifier.
+\end{itemize}
+
+\end{document}
