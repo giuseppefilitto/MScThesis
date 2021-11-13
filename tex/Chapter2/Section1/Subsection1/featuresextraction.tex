@@ -5,9 +5,23 @@
 This step consists of the extraction of the radiomic features from the images.
 For this purpose, the original MRI scans of each patient and the segmented ones are saved, as 3D images in a particular format (.nrrd) required by \textsc{Pyradiomics} library \cite{Pyradiomics} to extract features from the segmented areas of every single slice of the patient. 
 \\
-From each patient, a total of 100 radiomic features were extracted.
-The extraction settings were stored in a $\mathtt{Params.yaml}$ file required by \textsc{Pyradiomics}.
-The data were then stored in a data frame containing 100 columns (one for each feature) and 48 rows (one for each patient) ready for the analysis step.
+From each patient, a total of 100 radiomic features were extracted, belonging to:
+\begin{itemize}
+    \item \textbf{First Order Statistics} (18 features): Energy, Entropy, Kurtosis, Maximum, Mean, Mean Absolute Deviation, Median, Minimum, Skewness, Range, Robust Mean Absolute Deviation, Root Mean Squared, Total Energy, Uniformity, Variance, 10 Percentile, 90 Percentile, Interquartile Range
+    
+    \item \textbf{Shape based features 2D and 3D} (14 features): Elongation, Flatness, Least Axis Length, Major Axis Length, Maximum 2D Diameter Column, Maximum 2D Diameter Row, Maximum 2D Diameter Slice, Maximum 3D Diameter, Mesh Volume, Minor Axis Length, Sphericity, Surface Area, Surface Volume Ratio, Voxel Volume
+    
+    \item \textbf{Gray Level Co-occurrence Matrix (GLCM)} (22 features): Autocorrelation, Cluster Prominence, Cluster Shade, Cluster Tendency, Contrast, Correlation, Difference Average, Difference Entropy, Difference Variance, Inverse Variance, Joint Energy, Joint Entropy, Joint Average, Maximum Probability, Sum Squares, Sum Entropy, Imc1, Imc2, Id, Idn, Idm, Idmn
+    
+    \item \textbf{Gray Level Size Zone (GLSZM)} (16 features): Gray Level Non Uniformity, Gray Level Non Uniformity Normalized, Gray Level Variance, High Gray Level Zone Emphasis, Large Area Emphasis, Large Area High Gray Level Emphasis, Large Area Low Gray Level Emphasis, Low Gray Level Zone Emphasis, Size Zone Non Uniformity, Size Zone Non Uniformity Normalized, Small Area Emphasis, Small Area High Gray Level Emphasis, Small Area Low Gray Level Emphasis, Zone Entropy, Zone Percentage, Zone Variance
+    
+    \item \textbf{Gray Level Run Length Matrix (GLRLM)} (16 features): Gray Level Non Uniformity, Gray Level Non Uniformity Normalized, Gray Level Variance, High Gray Level Run Emphasis, Long Run Emphasis, Long Run High Gray Level Emphasis, Long Run Low Gray Level Emphasis, Low Gray Level Run Emphasis, Run Entropy, Run Length Non Uniformity, Run Length Non Uniformity Normalized, Run Percentage, Run Variance, Short Run Emphasis, Short Run High Gray Level Emphasis, Short Run Low Gray Level Emphasis
+ 
+    \item \textbf{Gray Level Dependence Matrix (GLDM)} (14 features): Dependence Entropy, Dependence Non Uniformity, Dependence Non Uniformity Normalized, Dependence Variance, Gray Level Non Uniformity, Gray Level Variance, High Gray Level Emphasis, Large Dependence Emphasis, Large Dependence High Gray Level Emphasis, Large Dependence Low Gray Level Emphasis, Low Gray Level Emphasis, Small Dependence Emphasis, Small Dependence High Gray Level Emphasis, Small Dependence Low Gray Level Emphasis
+\end{itemize}
+
+Data were then stored in a data frame containing 100 columns (one for each feature) and 48 rows (one for each patient) ready for the analysis step.
+
 
 
 \end{document}

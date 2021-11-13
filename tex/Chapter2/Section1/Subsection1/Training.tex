@@ -40,7 +40,9 @@ In this case the \textit{backbone} consists of an architecture called \textit{Ef
 \\
 The loss function is the combination between Dice loss with the binary focal loss.
 \\
-The algorithm used to minimize the loss function consists of the default \textit{Adam} (Adaptive Moment Estimation) optimizer provided by \textsc{TensorFlow}.
+The algorithm used to minimize the loss function consists of the default \textit{Adam} (Adaptive Moment Estimation) optimizer provided by \textsc{TensorFlow} with a learning rate set to $0.001$.
+\\
+The batch size\footnote{the batch size refers to the number of samples provided in one iteration.} was set to a value of 4.
 \\
 The metric function used to judge the performance during the training of the model was the Dice Similarity Coefficient (DSC).
 
